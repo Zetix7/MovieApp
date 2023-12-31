@@ -1,21 +1,21 @@
-﻿using MovieApp.AplicationServices.Components.CsvFile;
-using MovieApp.AplicationServices.Components.DataGenerator;
-using MovieApp.DataAccess.Data.Entities;
-using MovieApp.DataAccess.Data.Repositories;
+﻿using MovieApp.AplicationServices.Components.FileCreator.CsvFile;
 
 namespace MovieApp.UI;
 
 public class App : IApp
 {
-    private readonly ICsvFileCreator _csvFileCreator;
+    private readonly ICsvCreator _csvFileCreator;
+    private readonly ICsvReader _csvReader;
 
-    public App(ICsvFileCreator csvFileCreator)
+    public App(ICsvCreator csvFileCreator, ICsvReader csvReader)
     {
         _csvFileCreator = csvFileCreator;
+        _csvReader = csvReader;
     }
 
     public void Run()
     {
         _csvFileCreator.CreateMoviesCsvFileFromRepository();
+        var movies = _csvReader.ReadMovieCsvFile();
     }
 }

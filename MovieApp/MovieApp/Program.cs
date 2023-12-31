@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MovieApp.AplicationServices.Components.CsvFile;
 using MovieApp.AplicationServices.Components.DataGenerator;
+using MovieApp.AplicationServices.Components.FileCreator.CsvFile;
 using MovieApp.DataAccess;
 using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
@@ -12,7 +12,8 @@ services.AddSingleton<IDataGenerator, DataGenerator>();
 services.AddDbContext<MovieAppDbContext>();
 services.AddSingleton<IRepository<Movie>, ListRepository<Movie>>();
 services.AddSingleton<IRepository<Movie>, SqlRepository<Movie>>();
-services.AddSingleton<ICsvFileCreator, CsvFileCreator>();
+services.AddSingleton<ICsvCreator, CsvCreator>();
+services.AddSingleton<ICsvReader, CsvReader>();
 
 var serviceProvider = services.BuildServiceProvider();
 var app = serviceProvider.GetService<IApp>()!;
