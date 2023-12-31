@@ -1,15 +1,25 @@
-﻿using MovieApp.DataAccess.Data.Entities;
+﻿using MovieApp.AplicationServices.Components.DataGenerator;
+using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
 
 namespace MovieApp.UI;
 
 public class App : IApp
 {
+    private readonly IDataGenerator _dataGenerator;
+
+    public App(IDataGenerator dataGenerator)
+    {
+        _dataGenerator = dataGenerator;
+    }
+
     public void Run()
     {
         var movies = new ListRepository<Movie>();
-        movies.Add(new Movie { Id = 1, Title = "Avengers", Year = 2012, Universe = "Marvel", BoxOffice = 1_521_000_000.00m });
-        movies.Add(new Movie { Id = 2, Title = "Avengers: Age of Ultron", Year = 2015, Universe = "Marvel", BoxOffice = 1_409_000_000.00m });
+        foreach (var movie in _dataGenerator.GenerateSampleMovies())
+        {
+            movies.Add(movie);
+        }
 
         foreach (var movie in movies.GetAll())
         {
