@@ -2,5 +2,5 @@
 
 public interface IEntity
 {
-    public int Id { get; set; }
+    int Id { get; set; }
 }
