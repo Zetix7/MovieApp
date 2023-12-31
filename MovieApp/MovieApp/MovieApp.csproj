@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="AplicationServices\Components\" />
-    <Folder Include="DataAccess\Data\" />
     <Folder Include="DataAccess\Resources\" />
     <Folder Include="AplicationServices\" />
     <Folder Include="UI\" />
