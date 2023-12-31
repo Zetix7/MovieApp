@@ -1,5 +1,9 @@
-﻿using MovieApp.UI;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MovieApp.UI;
 
-var app = new App();
+var services = new ServiceCollection();
+services.AddSingleton<IApp, App>();
 
+var serviceProvider = services.BuildServiceProvider();
+var app = serviceProvider.GetService<IApp>()!;
 app.Run();
