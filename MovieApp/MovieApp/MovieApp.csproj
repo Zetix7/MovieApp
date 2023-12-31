@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AplicationServices\Components\" />
     <Folder Include="DataAccess\Resources\" />
-    <Folder Include="AplicationServices\" />
   </ItemGroup>
 
   <ItemGroup>
