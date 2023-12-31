@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MovieApp.AplicationServices.Components.CsvFile;
 using MovieApp.AplicationServices.Components.DataGenerator;
-using MovieApp.DataAccess;
 using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
 
@@ -8,29 +7,15 @@ namespace MovieApp.UI;
 
 public class App : IApp
 {
-    private readonly IDataGenerator _dataGenerator;
-    private readonly MovieAppDbContext _dbContext;
-    private readonly IRepository<Movie> _movieRepository;
+    private readonly ICsvFileCreator _csvFileCreator;
 
-    public App(IDataGenerator dataGenerator,MovieAppDbContext dbContext, IRepository<Movie> movieRepository)
+    public App(ICsvFileCreator csvFileCreator)
     {
-        _dataGenerator = dataGenerator;
-        _dbContext = dbContext;
-        _movieRepository = movieRepository;
+        _csvFileCreator = csvFileCreator;
     }
 
     public void Run()
     {
-        var movies = new SqlRepository<Movie>(_dbContext);
-        foreach (var movie in _dataGenerator.GenerateSampleMovies())
-        {
-            movies.Add(movie);
-            movies.Save();
-        }
-
-        foreach (var movie in movies.GetAll())
-        {
-            Console.WriteLine(movie);
-        }
+        _csvFileCreator.CreateMoviesCsvFileFromRepository();
     }
 }
