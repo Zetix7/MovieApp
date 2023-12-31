@@ -6,4 +6,6 @@ public class Movie : EntityBase
     public int Year { get; set; }
     public string? Universe { get; set; }
     public decimal BoxOffice { get; set; }
+
+    public override string ToString() => $"{base.ToString()}\t{Title} ({Year})\n\t\tUniversum: {Universe}\n\t\tBoxOffice: {BoxOffice:c}";
 }

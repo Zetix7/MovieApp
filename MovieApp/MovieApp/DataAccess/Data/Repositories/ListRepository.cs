@@ -10,6 +10,7 @@ public class ListRepository<T> : IRepository<T> where T : class, IEntity, new()
     {
         return _listRepository.OrderBy(x => x.Id).ToList();
     }
+
     public T GetById(int id)
     {
         return _listRepository.SingleOrDefault(x => x.Id == id, new T { Id = -1 });
