@@ -1,8 +1,7 @@
 ﻿namespace MovieApp.DataAccess.Data.Entities;
 
-public class Movie
+public class Movie : EntityBase
 {
-    public int Id { get; set; }
     public string? Title { get; set; }
     public int Year { get; set; }
     public string? Universe { get; set; }
