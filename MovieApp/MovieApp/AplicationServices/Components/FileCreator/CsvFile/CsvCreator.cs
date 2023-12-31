@@ -20,8 +20,15 @@ public class CsvCreator : ICsvCreator
         {
             foreach (var movie in movies)
             {
-                writer.WriteLine($"{movie.Title},{movie.Year},{movie.Universe},{movie.BoxOffice}");
+                var newBoxOffice = ConvertBoxOfficeValue(movie);
+                writer.WriteLine($"{movie.Title},{movie.Year},{movie.Universe},{newBoxOffice}");
             }
         }
+    }
+
+    private static string ConvertBoxOfficeValue(Movie movie)
+    {
+        var splitBoxOffice = movie.BoxOffice.ToString().Split(",");
+        return $"{splitBoxOffice[0]}.{splitBoxOffice[1]}";
     }
 }
