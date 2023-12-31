@@ -11,7 +11,7 @@ public class ListRepository<T> : IRepository<T> where T : class, IEntity, new()
         return _items.OrderBy(x => x.Id).ToList();
     }
 
-    public T GetById(int id)
+    public T? GetById(int id)
     {
         return _items.SingleOrDefault(x => x.Id == id, new T { Id = -1 });
     }
