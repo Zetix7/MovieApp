@@ -8,7 +8,7 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
     private readonly DbContext _dbContext;
     private readonly DbSet<T> _dbSet;
 
-    public SqlRepository(DbContext dbContext)
+    public SqlRepository(MovieAppDbContext dbContext)
     {
         _dbContext = dbContext;
         _dbContext.Database.EnsureCreated();
@@ -19,11 +19,7 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
 
     public T? GetById(int id) => _dbSet.SingleOrDefault(x => x.Id == id, new T { Id = -1});
 
-    public void Add(T item)
-    {
-        item.Id = _dbSet.Count() + 1;
-        _dbSet.Add(item);
-    }
+    public void Add(T item) => _dbSet.Add(item);
 
     public void Remove(T item) => _dbSet.Remove(item);
 
