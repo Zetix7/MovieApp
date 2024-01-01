@@ -1,8 +1,8 @@
 ﻿namespace MovieApp.UI.Menu;
 
-public class Menu : IMenu
+public class MainMenu : IMenu
 {
-    public void RunMenu()
+    public void LoadMenu()
     {
         Console.WriteLine("------- Welcome in Movie App -------\n");
 

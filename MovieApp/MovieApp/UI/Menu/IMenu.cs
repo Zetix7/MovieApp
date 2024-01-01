@@ -2,5 +2,5 @@
 
 public interface IMenu
 {
-    void RunMenu();
+    void LoadMenu();
 }

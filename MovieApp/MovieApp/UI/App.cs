@@ -16,6 +16,6 @@ public class App : IApp
 
     public void Run()
     {
-        _menu.RunMenu();
+        _menu.LoadMenu();
     }
 }

@@ -18,7 +18,7 @@ services.AddSingleton<ICsvCreator, CsvCreator>();
 services.AddSingleton<ICsvReader, CsvReader>();
 services.AddSingleton<IXmlCreator, XmlCreator>();
 services.AddSingleton<IXmlReader, XmlReader>();
-services.AddSingleton<IMenu, Menu>();
+services.AddSingleton<IMenu, MainMenu>();
 
 var serviceProvider = services.BuildServiceProvider();
 var app = serviceProvider.GetService<IApp>()!;
