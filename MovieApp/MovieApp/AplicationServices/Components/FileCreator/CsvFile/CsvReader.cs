@@ -9,7 +9,7 @@ public class CsvReader : ICsvReader
     {
         if (!File.Exists(@"DataAccess\Resources\Files\movies.csv"))
         {
-            throw new FileNotFoundException("File 'movies.csv' not exists!");
+            throw new FileNotFoundException("Not found 'movies.csv' file!");
         }
 
         if(new FileInfo(@"DataAccess\Resources\Files\movies.csv").Length < 10)
