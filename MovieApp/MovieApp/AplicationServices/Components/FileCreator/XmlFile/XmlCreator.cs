@@ -17,8 +17,13 @@ public class XmlCreator : IXmlCreator
     {
         var movies = _movieRepository.GetAll();
 
-        var items = new XElement("Movies", movies.Select(x=> 
-            new XElement("Movie", 
+        if (!movies.Any())
+        {
+            throw new ArgumentException("Repository is empty!");
+        }
+
+        var items = new XElement("Movies", movies.Select(x =>
+            new XElement("Movie",
                 new XAttribute("Title", x.Title!),
                 new XAttribute("Year", x.Year),
                 new XAttribute("Universe", x.Universe!),
