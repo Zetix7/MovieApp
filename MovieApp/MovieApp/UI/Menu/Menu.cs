@@ -77,6 +77,6 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
     protected abstract void RemoveItemToRepository();
     protected abstract void CreateCsvFile();
     protected abstract void ReadCsvFile();
-    //protected abstract void CreateXmlFile();
+    protected abstract void CreateXmlFile();
     //protected abstract void ReadXmlFile();
 }
