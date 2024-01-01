@@ -1,4 +1,5 @@
 ﻿using MovieApp.DataAccess.Data.Entities;
+using MovieApp.UI.Menu.Extensions;
 
 namespace MovieApp.UI.Menu;
 
@@ -18,13 +19,13 @@ public class MainMenu : IMainMenu
         string choise;
         do
         {
-            Console.WriteLine("-----------------------------------------------------------------------");
+            MenuHelper.AddSeparator();
             Console.WriteLine("Choose one option:");
             Console.WriteLine("\t1. Movies resources.");
             Console.WriteLine("\tQ. Quit.");
             Console.Write("\t\tYour choise: ");
             choise = Console.ReadLine()!.Trim().ToUpper();
-            Console.WriteLine("-----------------------------------------------------------------------");
+            MenuHelper.AddSeparator();
 
             switch (choise)
             {
@@ -34,10 +35,10 @@ public class MainMenu : IMainMenu
                 case "Q":
                     break;
                 default:
-                    Console.WriteLine("Choose one option or you stuck here forever!");
+                    Console.WriteLine("INFO : Choose one option or you stuck here forever!");
                     break;
             }
 
-        } while (choise != "Q" );
+        } while (choise != "Q");
     }
 }

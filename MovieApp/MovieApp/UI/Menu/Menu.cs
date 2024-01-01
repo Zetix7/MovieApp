@@ -1,5 +1,6 @@
 ﻿using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
+using MovieApp.UI.Menu.Extensions;
 
 namespace MovieApp.UI.Menu;
 
@@ -14,7 +15,7 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
 
     public virtual void LoadMenu()
     {
-        Console.WriteLine("-----------------------------------------------------------------------");
+        MenuHelper.AddSeparator();
         Console.WriteLine("Choose one option:");
         Console.WriteLine($"\t1. Get all {typeof(T).Name}s from repository.");
         Console.WriteLine($"\t2. Get by Id {typeof(T).Name} from repository.");
@@ -30,7 +31,7 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
 
     protected void PrintAllItems()
     {
-        Console.WriteLine("-----------------------------------------------------------------------");
+        MenuHelper.AddSeparator();
         var items = _repository.GetAll();
 
         if (!items.Any())
@@ -46,7 +47,7 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
 
     protected void PrintItemById()
     {
-        Console.WriteLine("-----------------------------------------------------------------------");
+        MenuHelper.AddSeparator();
         var items = _repository.GetAll();
         if (!items.Any())
         {
@@ -56,8 +57,8 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
         Console.Write($"\tInsert Id to print {typeof(T).Name}: ");
         var itemId = Console.ReadLine()!.Trim();
 
-        Console.WriteLine("-----------------------------------------------------------------------");
-        
+        MenuHelper.AddSeparator();
+
         if (!int.TryParse(itemId, out var id))
         {
             throw new FormatException($"Invalid Id '{itemId}'! This is not integer!");

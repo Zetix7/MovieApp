@@ -1,5 +1,6 @@
 ﻿using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
+using MovieApp.UI.Menu.Extensions;
 
 namespace MovieApp.UI.Menu;
 
@@ -47,7 +48,8 @@ public class MoviesMenu : Menu<Movie>
                 case "Q":
                     break;
                 default:
-                    Console.WriteLine("Choose one option or you stuck here forever!");
+                    MenuHelper.AddSeparator();
+                    Console.WriteLine("INFO : Choose one option or you stuck here forever!");
                     break;
             }
 
@@ -56,29 +58,29 @@ public class MoviesMenu : Menu<Movie>
 
     protected override void RemoveItemToRepository()
     {
-        Console.WriteLine("-----------------------------------------------------------------------");
+        MenuHelper.AddSeparator();
         Console.Write("\tInsert movie Id to remove from repository: ");
         var id = Console.ReadLine()!.Trim();
 
         if (!int.TryParse(id, out var newId))
         {
-            throw new FormatException($"Invalid Id '{id}'! This is not integer!");
+            throw new FormatException($"ERROR : Invalid Id '{id}'! This is not integer!");
         }
 
         if (!_movieRepository.GetAll().Where(x => x.Id == newId).Any())
         {
-            throw new ArgumentException("Id not exist in repository!");
+            throw new ArgumentException("ERROR : Id not exist in repository!");
         }
 
-        var movie = _movieRepository.GetAll().SingleOrDefault(x=>x.Id== newId);
+        var movie = _movieRepository.GetAll().SingleOrDefault(x => x.Id == newId);
 
-        Console.WriteLine("-----------------------------------------------------------------------");
+        MenuHelper.AddSeparator();
         Console.WriteLine("\tAre you sure to remove this movie?:");
         Console.WriteLine(movie);
 
         Console.Write("\t\tYour choise (Y/N): ");
         var choise = Console.ReadLine()!.Trim().ToUpper();
-        Console.WriteLine("-----------------------------------------------------------------------");
+        MenuHelper.AddSeparator();
         if (choise.Equals("Y"))
         {
             _movieRepository.Remove(movie!);
@@ -87,13 +89,13 @@ public class MoviesMenu : Menu<Movie>
         }
         else
         {
-            Console.WriteLine("INFO : Remove aborted.");
+            Console.WriteLine("INFO : Movie remove aborted.");
         }
     }
 
     protected override void AddNewItemToRepository()
     {
-        Console.WriteLine("-----------------------------------------------------------------------");
+        MenuHelper.AddSeparator();
         Console.Write("\tInsert title: ");
         var title = Console.ReadLine()!.Trim();
 
@@ -102,7 +104,7 @@ public class MoviesMenu : Menu<Movie>
 
         if (!int.TryParse(year, out var newYear))
         {
-            throw new FormatException($"Invalid year '{year}'! This is not integer!");
+            throw new FormatException($"ERROR : Invalid year '{year}'! This is not integer!");
         }
 
         Console.Write("\tInsert universe: ");
@@ -113,18 +115,18 @@ public class MoviesMenu : Menu<Movie>
 
         if (!decimal.TryParse(boxOffice, out var newBoxOffice))
         {
-            throw new FormatException($"Invalid box office '{boxOffice}'! This is not price!");
+            throw new FormatException($"ERROR : Invalid box office '{boxOffice}'! This is not price!");
         }
 
         if (_movieRepository.GetAll().Where(x => x.Title == title && x.Year == newYear).Any())
         {
-            throw new ArgumentException("Movie exist in repository!");
+            throw new ArgumentException("ERROR : Movie exist in repository!");
         }
 
         _movieRepository.Add(new Movie { Title = title, Year = newYear, Universe = universe, BoxOffice = newBoxOffice });
         _movieRepository.Save();
 
-        Console.WriteLine("-----------------------------------------------------------------------");
-        Console.WriteLine($"INFO : New movie added to repository.\n\n{_movieRepository.GetAll().LastOrDefault(x=>x.Title == title)}");
+        MenuHelper.AddSeparator();
+        Console.WriteLine($"INFO : New movie added to repository.\n\n{_movieRepository.GetAll().LastOrDefault(x => x.Title == title)}");
     }
 }
