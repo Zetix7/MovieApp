@@ -2,26 +2,21 @@
 
 namespace MovieApp.UI.Menu;
 
-public class MainMenu : IMainMenu
+public class Menu<T> : IMenu<T> where T : class, IEntity
 {
-    private readonly IMenu<Movie> _movieMenu;
-
-    public MainMenu(IMenu<Movie> movieMenu)
-    {
-        _movieMenu = movieMenu;
-    }
-
     public void LoadMenu()
     {
-        Console.WriteLine("------- Welcome in Movie App -------\n");
+        Console.WriteLine($"\n------- {typeof(T).Name}s Menu -------\n");
 
         string choise;
         do
         {
             Console.WriteLine("-----------------------------------------------------------------------");
             Console.WriteLine("Choose one option:");
-            Console.WriteLine("\t1. Movies resources.");
-            Console.WriteLine("\tQ. Quit.");
+            Console.WriteLine($"\t1. {typeof(T).Name}s CRUD actions in repository.");
+            Console.WriteLine($"\t2. {typeof(T).Name}s *.csv file actions.");
+            Console.WriteLine($"\t3. {typeof(T).Name}s *.xml file actions.");
+            Console.WriteLine("\tQ. Return.");
             Console.Write("\t\tYour choise: ");
             choise = Console.ReadLine()!.Trim().ToUpper();
             Console.WriteLine("-----------------------------------------------------------------------");
@@ -29,7 +24,10 @@ public class MainMenu : IMainMenu
             switch (choise)
             {
                 case "1":
-                    _movieMenu.LoadMenu();
+                    break;
+                case "2":
+                    break;
+                case "3":
                     break;
                 case "Q":
                     break;
@@ -38,6 +36,6 @@ public class MainMenu : IMainMenu
                     break;
             }
 
-        } while (choise != "Q" );
+        } while (choise != "Q");
     }
 }

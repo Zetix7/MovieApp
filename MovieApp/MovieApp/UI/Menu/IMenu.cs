@@ -1,6 +1,8 @@
-﻿namespace MovieApp.UI.Menu;
+﻿using MovieApp.DataAccess.Data.Entities;
 
-public interface IMenu
+namespace MovieApp.UI.Menu;
+
+public interface IMenu<T> where T : class, IEntity
 {
     void LoadMenu();
 }

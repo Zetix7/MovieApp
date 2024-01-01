@@ -1,15 +1,12 @@
-﻿using MovieApp.AplicationServices.Components.FileCreator.CsvFile;
-using MovieApp.AplicationServices.Components.FileCreator.XmlFile;
-using MovieApp.UI.Menu;
-using System.Xml;
+﻿using MovieApp.UI.Menu;
 
 namespace MovieApp.UI;
 
 public class App : IApp
 {
-    private readonly IMenu _menu;
+    private readonly IMainMenu _menu;
 
-    public App(IMenu menu)
+    public App(IMainMenu menu)
     {
         _menu = menu;
     }
