@@ -1,36 +1,21 @@
 ﻿using MovieApp.AplicationServices.Components.FileCreator.CsvFile;
 using MovieApp.AplicationServices.Components.FileCreator.XmlFile;
+using MovieApp.UI.Menu;
 using System.Xml;
 
 namespace MovieApp.UI;
 
 public class App : IApp
 {
-    private readonly IXmlCreator _xmlCreator;
-    private readonly ICsvCreator _csvCreator;
-    private readonly IXmlReader _xmlReader;
-    private readonly ICsvReader _csvReader;
+    private readonly IMenu _menu;
 
-    public App(IXmlCreator xmlCreator, ICsvCreator csvCreator, IXmlReader xmlReader, ICsvReader csvReader)
+    public App(IMenu menu)
     {
-        _csvCreator = csvCreator;
-        _xmlCreator = xmlCreator;
-        _xmlReader = xmlReader;
-        _csvReader = csvReader;
+        _menu = menu;
     }
 
     public void Run()
     {
-        _csvCreator.CreateMoviesCsvFileFromRepository();
-        _csvReader.ReadMovieCsvFile();
-        _xmlCreator.CreateMovieXmlFileFromRepository();
-        _xmlReader.ReadMovieXmlFile();
-
-        var movies = _xmlReader.ReadMovieXmlFile();
-
-        foreach ( var movie in movies )
-        {
-            Console.WriteLine($"{movie.Title} ({movie.Year}) - {movie.Universe} - BoxOffice: {movie.BoxOffice}");
-        }
+        _menu.RunMenu();
     }
 }

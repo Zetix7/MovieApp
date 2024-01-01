@@ -6,6 +6,7 @@ using MovieApp.DataAccess;
 using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
 using MovieApp.UI;
+using MovieApp.UI.Menu;
 
 var services = new ServiceCollection();
 services.AddSingleton<IApp, App>();
@@ -17,6 +18,7 @@ services.AddSingleton<ICsvCreator, CsvCreator>();
 services.AddSingleton<ICsvReader, CsvReader>();
 services.AddSingleton<IXmlCreator, XmlCreator>();
 services.AddSingleton<IXmlReader, XmlReader>();
+services.AddSingleton<IMenu, Menu>();
 
 var serviceProvider = services.BuildServiceProvider();
 var app = serviceProvider.GetService<IApp>()!;
