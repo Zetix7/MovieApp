@@ -37,8 +37,41 @@ public class Menu<T> : IMenu<T> where T : class, IEntity, new()
             switch (choise)
             {
                 case "1":
+                    var items = _repository.GetAll();
+
+                    if (!items.Any())
+                    {
+                        throw new Exception("Repository is empty!");
+                    }
+
+                    foreach (var item in items)
+                    {
+                        Console.WriteLine($"{item}");
+                    }
                     break;
                 case "2":
+                    items = _repository.GetAll();
+
+                    if (!items.Any())
+                    {
+                        throw new Exception("Repository is empty!");
+                    }
+
+                    Console.Write($"\tInsert Id to print {typeof(T).Name}: ");
+                    var itemId = Console.ReadLine()!.Trim();
+
+                    if(!int.TryParse(itemId, out var id))
+                    {
+                        throw new FormatException($"Invalid Id '{itemId}'! This is not integer!");
+                    }
+
+                    var itemToPrint = items.SingleOrDefault(x => x.Id == id, new T { Id =-1 });
+                    
+                    if(itemToPrint.Id == -1)
+                    {
+                        throw new ArgumentException($"{typeof(T).Name} with Id = {itemId} not exist!");
+                    }
+                    Console.WriteLine(itemToPrint);
                     break;
                 case "3":
                     break;
