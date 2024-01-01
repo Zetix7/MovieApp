@@ -12,16 +12,19 @@ public class MoviesMenu : Menu<Movie>
     private readonly ICsvCreator _csvCreator;
     private readonly ICsvReader _csvReader;
     private readonly IXmlCreator _xmlCreator;
+    private readonly IXmlReader _xmlReader;
 
     public MoviesMenu(IRepository<Movie> movieRepository, 
         ICsvCreator csvCreator, 
         ICsvReader csvReader,
-        IXmlCreator xmlCreator) : base(movieRepository)
+        IXmlCreator xmlCreator,
+        IXmlReader xmlReader) : base(movieRepository)
     {
         _movieRepository = movieRepository;
         _csvCreator = csvCreator;
         _csvReader = csvReader;
         _xmlCreator = xmlCreator;
+        _xmlReader = xmlReader;
     }
 
     public override void LoadMenu()
@@ -58,6 +61,7 @@ public class MoviesMenu : Menu<Movie>
                     CreateXmlFile();
                     break;
                 case "8":
+                    ReadXmlFile();
                     break;
                 case "Q":
                     break;
@@ -68,6 +72,16 @@ public class MoviesMenu : Menu<Movie>
             }
         } while (choise != "Q");
     }
+    protected override void ReadXmlFile()
+    {
+        var movies = _xmlReader.ReadMovieXmlFile();
+        MenuHelper.AddSeparator();
+        foreach (var movie in movies)
+        {
+            Console.WriteLine(movie);
+        }
+    }
+
     protected override void CreateXmlFile()
     {
         _xmlCreator.CreateMovieXmlFileFromRepository();

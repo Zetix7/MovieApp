@@ -9,5 +9,5 @@ public class Movie
     public string? Universe { get; set; }
     public decimal BoxOffice { get; set; }
 
-    public override string ToString() => $"{Title,-53} ({Year}) - {Universe,-20} - BoxOffice: {BoxOffice.ToString("C", new System.Globalization.CultureInfo("en-US"))}";
+    public override string ToString() => $"{Title,-53} ({Year}) - {Universe,-20} - BoxOffice: {BoxOffice.ToString("C", new System.Globalization.CultureInfo("en-US")),20}";
 }
