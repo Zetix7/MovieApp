@@ -1,4 +1,4 @@
-﻿using MovieApp.DataAccess.Data.Entities;
+﻿using System.Globalization;
 
 namespace MovieApp.AplicationServices.Components.FileCreator.Models;
 
@@ -9,5 +9,5 @@ public class Movie
     public string? Universe { get; set; }
     public decimal BoxOffice { get; set; }
 
-    public override string ToString() => $"{Title,-53} ({Year}) - {Universe,-20} - BoxOffice: {BoxOffice.ToString("C", new System.Globalization.CultureInfo("en-US")),20}";
+    public override string ToString() => $"{Title,-53} ({Year}) - {Universe,-20} - BoxOffice: {BoxOffice.ToString("C", new CultureInfo("en-US")),20}";
 }

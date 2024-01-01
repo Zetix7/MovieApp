@@ -14,8 +14,8 @@ public class MoviesMenu : Menu<Movie>
     private readonly IXmlCreator _xmlCreator;
     private readonly IXmlReader _xmlReader;
 
-    public MoviesMenu(IRepository<Movie> movieRepository, 
-        ICsvCreator csvCreator, 
+    public MoviesMenu(IRepository<Movie> movieRepository,
+        ICsvCreator csvCreator,
         ICsvReader csvReader,
         IXmlCreator xmlCreator,
         IXmlReader xmlReader) : base(movieRepository)
@@ -37,38 +37,61 @@ public class MoviesMenu : Menu<Movie>
             base.LoadMenu();
             choise = Console.ReadLine()!.Trim().ToUpper();
 
-            switch (choise)
+            try
             {
-                case "1":
-                    PrintAllItems();
-                    break;
-                case "2":
-                    PrintItemById();
-                    break;
-                case "3":
-                    AddNewItemToRepository();
-                    break;
-                case "4":
-                    RemoveItemToRepository();
-                    break;
-                case "5":
-                    CreateCsvFile();
-                    break;
-                case "6":
-                    ReadCsvFile();
-                    break;
-                case "7":
-                    CreateXmlFile();
-                    break;
-                case "8":
-                    ReadXmlFile();
-                    break;
-                case "Q":
-                    break;
-                default:
-                    MenuHelper.AddSeparator();
-                    Console.WriteLine("INFO : Choose one option or you stuck here forever!");
-                    break;
+                switch (choise)
+                {
+                    case "1":
+                        PrintAllItems();
+                        break;
+                    case "2":
+                        PrintItemById();
+                        break;
+                    case "3":
+                        AddNewItemToRepository();
+                        break;
+                    case "4":
+                        RemoveItemToRepository();
+                        break;
+                    case "5":
+                        CreateCsvFile();
+                        break;
+                    case "6":
+                        ReadCsvFile();
+                        break;
+                    case "7":
+                        CreateXmlFile();
+                        break;
+                    case "8":
+                        ReadXmlFile();
+                        break;
+                    case "Q":
+                        break;
+                    default:
+                        MenuHelper.AddSeparator();
+                        Console.WriteLine("INFO : Choose one option or you stuck here forever!");
+                        break;
+                }
+            }
+            catch (ArgumentException ae)
+            {
+                Console.WriteLine(ae.Message);
+            }
+            catch (FormatException fe)
+            {
+                Console.WriteLine(fe.Message);
+            }
+            catch (FileNotFoundException fe)
+            {
+                Console.WriteLine(fe.Message);
+            }
+            catch (FileLoadException fe)
+            {
+                Console.WriteLine(fe.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         } while (choise != "Q");
     }
@@ -93,7 +116,7 @@ public class MoviesMenu : Menu<Movie>
     {
         var movies = _csvReader.ReadMovieCsvFile();
         MenuHelper.AddSeparator();
-        foreach ( var movie in movies )
+        foreach (var movie in movies)
         {
             Console.WriteLine(movie);
         }
@@ -114,11 +137,13 @@ public class MoviesMenu : Menu<Movie>
 
         if (!int.TryParse(id, out var newId))
         {
+            MenuHelper.AddSeparator();
             throw new FormatException($"ERROR : Invalid Id '{id}'! This is not integer!");
         }
 
         if (!_movieRepository.GetAll().Where(x => x.Id == newId).Any())
         {
+            MenuHelper.AddSeparator();
             throw new ArgumentException("ERROR : Id not exist in repository!");
         }
 
@@ -154,6 +179,7 @@ public class MoviesMenu : Menu<Movie>
 
         if (!int.TryParse(year, out var newYear))
         {
+            MenuHelper.AddSeparator();
             throw new FormatException($"ERROR : Invalid year '{year}'! This is not integer!");
         }
 
@@ -165,11 +191,13 @@ public class MoviesMenu : Menu<Movie>
 
         if (!decimal.TryParse(boxOffice, out var newBoxOffice))
         {
+            MenuHelper.AddSeparator();
             throw new FormatException($"ERROR : Invalid box office '{boxOffice}'! This is not price!");
         }
 
         if (_movieRepository.GetAll().Where(x => x.Title == title && x.Year == newYear).Any())
         {
+            MenuHelper.AddSeparator();
             throw new ArgumentException("ERROR : Movie exist in repository!");
         }
 

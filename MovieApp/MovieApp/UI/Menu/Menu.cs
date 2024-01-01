@@ -31,13 +31,7 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
 
     protected void PrintAllItems()
     {
-        MenuHelper.AddSeparator();
-        var items = _repository.GetAll();
-
-        if (!items.Any())
-        {
-            throw new Exception("Repository is empty!");
-        }
+        var items = CheckRepositoryContent();
 
         foreach (var item in items)
         {
@@ -47,12 +41,7 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
 
     protected void PrintItemById()
     {
-        MenuHelper.AddSeparator();
-        var items = _repository.GetAll();
-        if (!items.Any())
-        {
-            throw new Exception("Repository is empty!");
-        }
+        var items = CheckRepositoryContent();
 
         Console.Write($"\tInsert Id to print {typeof(T).Name}: ");
         var itemId = Console.ReadLine()!.Trim();
@@ -61,6 +50,7 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
 
         if (!int.TryParse(itemId, out var id))
         {
+            MenuHelper.AddSeparator();
             throw new FormatException($"Invalid Id '{itemId}'! This is not integer!");
         }
 
@@ -68,9 +58,23 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
 
         if (itemToPrint.Id == -1)
         {
+            MenuHelper.AddSeparator();
             throw new ArgumentException($"{typeof(T).Name} with Id = {itemId} not exist!");
         }
         Console.WriteLine(itemToPrint);
+    }
+
+    private IEnumerable<T> CheckRepositoryContent()
+    {
+        MenuHelper.AddSeparator();
+        var items = _repository.GetAll();
+        if (!items.Any())
+        {
+            MenuHelper.AddSeparator();
+            throw new Exception("INFO : Repository is empty!");
+        }
+
+        return items;
     }
 
     protected abstract void AddNewItemToRepository();

@@ -1,4 +1,6 @@
-﻿namespace MovieApp.DataAccess.Data.Entities;
+﻿using System.Globalization;
+
+namespace MovieApp.DataAccess.Data.Entities;
 
 public class Movie : EntityBase
 {
@@ -7,5 +9,5 @@ public class Movie : EntityBase
     public string? Universe { get; set; }
     public decimal BoxOffice { get; set; }
 
-    public override string ToString() => $"{base.ToString()} \t{Title} ({Year})\n\tUniversum: {Universe}\n\tBoxOffice: {BoxOffice.ToString("C",new System.Globalization.CultureInfo("en-US")),20}";
+    public override string ToString() => $"{base.ToString()} \t{Title} ({Year})\n\tUniversum: {Universe}\n\tBoxOffice: {BoxOffice.ToString("C",new CultureInfo("en-US")),20}";
 }
