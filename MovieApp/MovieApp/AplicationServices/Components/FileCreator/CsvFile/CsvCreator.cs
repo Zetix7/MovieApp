@@ -16,6 +16,11 @@ public class CsvCreator : ICsvCreator
     {
         var movies = _movieRepository.GetAll();
 
+        if (!movies.Any())
+        {
+            throw new ArgumentException("Repository is empty!");
+        }
+
         using (var writer = File.CreateText(@"DataAccess\Resources\Files\movies.csv"))
         {
             foreach (var movie in movies)
