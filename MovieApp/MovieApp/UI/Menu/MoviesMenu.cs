@@ -1,4 +1,5 @@
 ﻿using MovieApp.AplicationServices.Components.FileCreator.CsvFile;
+using MovieApp.AplicationServices.Components.FileCreator.XmlFile;
 using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
 using MovieApp.UI.Menu.Extensions;
@@ -9,11 +10,15 @@ public class MoviesMenu : Menu<Movie>
 {
     private readonly IRepository<Movie> _movieRepository;
     private readonly ICsvCreator _csvCreator;
+    private readonly ICsvReader _csvReader;
 
-    public MoviesMenu(IRepository<Movie> movieRepository, ICsvCreator csvCreator) : base(movieRepository)
+    public MoviesMenu(IRepository<Movie> movieRepository, 
+        ICsvCreator csvCreator, 
+        ICsvReader csvReader) : base(movieRepository)
     {
         _movieRepository = movieRepository;
         _csvCreator = csvCreator;
+        _csvReader = csvReader;
     }
 
     public override void LoadMenu()
@@ -44,6 +49,7 @@ public class MoviesMenu : Menu<Movie>
                     CreateCsvFile();
                     break;
                 case "6":
+                    ReadCsvFile();
                     break;
                 case "7":
                     break;
@@ -57,6 +63,16 @@ public class MoviesMenu : Menu<Movie>
                     break;
             }
         } while (choise != "Q");
+    }
+
+    protected override void ReadCsvFile()
+    {
+        var movies = _csvReader.ReadMovieCsvFile();
+        MenuHelper.AddSeparator();
+        foreach ( var movie in movies )
+        {
+            Console.WriteLine(movie);
+        }
     }
 
     protected override void CreateCsvFile()

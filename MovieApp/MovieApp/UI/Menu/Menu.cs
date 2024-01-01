@@ -22,9 +22,9 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
         Console.WriteLine($"\t3. Add new {typeof(T).Name} to repository.");
         Console.WriteLine($"\t4. Remove exists {typeof(T).Name} in repository.");
         Console.WriteLine($"\t5. Create {typeof(T).Name.ToLower()}s.csv file from repository.");
-        Console.WriteLine($"\t6. Read all {typeof(T).Name.ToLower()}s from {typeof(T).Name}s.csv file.");
+        Console.WriteLine($"\t6. Read and print all {typeof(T).Name.ToLower()}s from {typeof(T).Name}s.csv file.");
         Console.WriteLine($"\t7. Create {typeof(T).Name.ToLower()}s.xml file from repository.");
-        Console.WriteLine($"\t8. Read all {typeof(T).Name.ToLower()}s from {typeof(T).Name}s.xml file.");
+        Console.WriteLine($"\t8. Read and print all {typeof(T).Name.ToLower()}s from {typeof(T).Name}s.xml file.");
         Console.WriteLine("\tQ. Return.");
         Console.Write("\t\tYour choise: ");
     }
@@ -76,7 +76,7 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
     protected abstract void AddNewItemToRepository();
     protected abstract void RemoveItemToRepository();
     protected abstract void CreateCsvFile();
-    //protected abstract void ReadCsvFile();
+    protected abstract void ReadCsvFile();
     //protected abstract void CreateXmlFile();
     //protected abstract void ReadXmlFile();
 }
