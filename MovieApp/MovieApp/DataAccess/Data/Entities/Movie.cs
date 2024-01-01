@@ -7,5 +7,5 @@ public class Movie : EntityBase
     public string? Universe { get; set; }
     public decimal BoxOffice { get; set; }
 
-    public override string ToString() => $"{base.ToString()} \t{Title} ({Year})\n\tUniversum: {Universe}\n\tBoxOffice: {BoxOffice:c}";
+    public override string ToString() => $"{base.ToString()} \t{Title} ({Year})\n\tUniversum: {Universe}\n\tBoxOffice: {BoxOffice.ToString("C",new System.Globalization.CultureInfo("en-US"))}";
 }
