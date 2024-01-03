@@ -30,7 +30,7 @@ public class ArtistsMenu : Menu<Artist>
 
     public override void LoadMenu()
     {
-        Console.WriteLine($"\n------- Movies Menu -------\n");
+        Console.WriteLine($"\n------- Artists Menu -------\n");
 
         string choise;
         do
@@ -52,7 +52,7 @@ public class ArtistsMenu : Menu<Artist>
                         AddNewItemToRepository();
                         break;
                     case "4":
-                        RemoveItemToRepository();
+                        RemoveItemFromRepository();
                         break;
                     case "5":
                         CreateCsvFile();
@@ -113,8 +113,43 @@ public class ArtistsMenu : Menu<Artist>
     {
     }
 
-    protected override void RemoveItemToRepository()
+    protected override void RemoveItemFromRepository()
     {
+        MenuHelper.AddSeparator();
+        Console.Write("Insert artist Id to remove from repository: ");
+        var id = Console.ReadLine();
+
+        if (!int.TryParse(id, out int newInt))
+        {
+            MenuHelper.AddSeparator();
+            throw new FormatException($"ERROR : Invalid id '{id}'! This is not integer!");
+        }
+
+        var artist = _artistRepository.GetById(newInt);
+
+        if (artist == null)
+        {
+            MenuHelper.AddSeparator();
+            throw new ArgumentException("ERROR : Id not exists in repository!");
+        }
+
+        Console.WriteLine("\tAre you sure to remove artist?:");
+        Console.WriteLine(artist);
+
+        Console.Write("\t\tYour choise (Y/N): ");
+        var choise = Console.ReadLine()!.Trim().ToUpper();
+
+        MenuHelper.AddSeparator();
+        if (choise == "Y")
+        {
+            _artistRepository.Remove(artist);
+            _artistRepository.Save();
+            Console.WriteLine("INFO : Artist removed successfully.");
+        }
+        else
+        {
+            Console.WriteLine("INFO : Artist remove aborted.");
+        }
     }
 
     protected override void AddNewItemToRepository()
@@ -134,7 +169,7 @@ public class ArtistsMenu : Menu<Artist>
 
         _artistRepository.Add(new Artist { FirstName = firstName, LastName = lastName });
         _artistRepository.Save();
-        
+
         MenuHelper.AddSeparator();
         Console.WriteLine($"INFO : Artist added to repository.\n\n{artists.LastOrDefault(x => x.FirstName == firstName && x.LastName == lastName)}");
     }

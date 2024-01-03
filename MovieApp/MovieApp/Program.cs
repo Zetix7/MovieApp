@@ -21,6 +21,8 @@ services.AddSingleton<IXmlReader, XmlReader>();
 services.AddSingleton<IMainMenu, MainMenu>();
 services.AddSingleton<IMenu<Movie>, MoviesMenu>();
 services.AddSingleton<IMenu<Artist>, ArtistsMenu>();
+services.AddSingleton<IRepository<Artist>, ListRepository<Artist>>();
+services.AddSingleton<IRepository<Artist>, SqlRepository<Artist>>();
 
 var serviceProvider = services.BuildServiceProvider();
 var app = serviceProvider.GetService<IApp>()!;

@@ -17,7 +17,7 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
 
     public IEnumerable<T> GetAll() => _dbSet.OrderBy(x => x.Id).ToList();
 
-    public T? GetById(int id) => _dbSet.SingleOrDefault(x => x.Id == id, new T { Id = -1});
+    public T? GetById(int id) => _dbSet.SingleOrDefault(x => x.Id == id);
 
     public void Add(T item) => _dbSet.Add(item);
 

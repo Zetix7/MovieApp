@@ -46,12 +46,10 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
         Console.Write($"\tInsert Id to print {typeof(T).Name}: ");
         var itemId = Console.ReadLine()!.Trim();
 
-        MenuHelper.AddSeparator();
-
         if (!int.TryParse(itemId, out var id))
         {
             MenuHelper.AddSeparator();
-            throw new FormatException($"Invalid Id '{itemId}'! This is not integer!");
+            throw new FormatException($"ERROR : Invalid Id '{itemId}'! This is not integer!");
         }
 
         var itemToPrint = items.SingleOrDefault(x => x.Id == id, new T { Id = -1 });
@@ -59,10 +57,19 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
         if (itemToPrint.Id == -1)
         {
             MenuHelper.AddSeparator();
-            throw new ArgumentException($"{typeof(T).Name} with Id = {itemId} not exist!");
+            throw new ArgumentException($"ERROR : {typeof(T).Name} with Id = {itemId} not exist!");
         }
+
+        Console.WriteLine();
         Console.WriteLine(itemToPrint);
     }
+
+    protected abstract void AddNewItemToRepository();
+    protected abstract void RemoveItemFromRepository();
+    protected abstract void CreateCsvFile();
+    protected abstract void ReadCsvFile();
+    protected abstract void CreateXmlFile();
+    protected abstract void ReadXmlFile();
 
     private IEnumerable<T> CheckRepositoryContent()
     {
@@ -70,17 +77,9 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
         var items = _repository.GetAll();
         if (!items.Any())
         {
-            MenuHelper.AddSeparator();
             throw new Exception("INFO : Repository is empty!");
         }
 
         return items;
     }
-
-    protected abstract void AddNewItemToRepository();
-    protected abstract void RemoveItemToRepository();
-    protected abstract void CreateCsvFile();
-    protected abstract void ReadCsvFile();
-    protected abstract void CreateXmlFile();
-    protected abstract void ReadXmlFile();
 }

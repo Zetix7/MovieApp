@@ -51,7 +51,7 @@ public class MoviesMenu : Menu<Movie>
                         AddNewItemToRepository();
                         break;
                     case "4":
-                        RemoveItemToRepository();
+                        RemoveItemFromRepository();
                         break;
                     case "5":
                         CreateCsvFile();
@@ -129,7 +129,7 @@ public class MoviesMenu : Menu<Movie>
         Console.WriteLine("INFO : Created movies.csv file.");
     }
 
-    protected override void RemoveItemToRepository()
+    protected override void RemoveItemFromRepository()
     {
         MenuHelper.AddSeparator();
         Console.Write("\tInsert movie Id to remove from repository: ");
@@ -144,7 +144,7 @@ public class MoviesMenu : Menu<Movie>
         if (!_movieRepository.GetAll().Where(x => x.Id == newId).Any())
         {
             MenuHelper.AddSeparator();
-            throw new ArgumentException("ERROR : Id not exist in repository!");
+            throw new ArgumentException("ERROR : Id not exists in repository!");
         }
 
         var movie = _movieRepository.GetAll().SingleOrDefault(x => x.Id == newId);
