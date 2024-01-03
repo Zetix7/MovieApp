@@ -3,4 +3,5 @@
 public interface ICsvCreator
 {
     void CreateMoviesCsvFileFromRepository();
+    void CreateArtistsCsvFileFromRepository();
 }

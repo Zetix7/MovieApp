@@ -6,10 +6,30 @@ namespace MovieApp.AplicationServices.Components.FileCreator.CsvFile;
 public class CsvCreator : ICsvCreator
 {
     private readonly IRepository<Movie> _movieRepository;
+    private readonly IRepository<Artist> _artistRepository;
 
-    public CsvCreator(IRepository<Movie> movieRepository)
+    public CsvCreator(IRepository<Movie> movieRepository, IRepository<Artist> artistRepository)
     {
         _movieRepository = movieRepository;
+        _artistRepository = artistRepository;
+    }
+
+    public void CreateArtistsCsvFileFromRepository()
+    {
+        var artists = _artistRepository.GetAll();
+
+        if(!artists.Any())
+        {
+            throw new ArgumentException("Repository is empty!");
+        }
+
+        using(var writer = File.CreateText(@"DataAccess\Resources\Files\movies.csv"))
+        {
+            foreach(var artist in artists)
+            {
+                writer.WriteLine(artist);
+            }
+        }
     }
 
     public void CreateMoviesCsvFileFromRepository()

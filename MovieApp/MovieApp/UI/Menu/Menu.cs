@@ -52,9 +52,9 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
             throw new FormatException($"ERROR : Invalid Id '{itemId}'! This is not integer!");
         }
 
-        var itemToPrint = items.SingleOrDefault(x => x.Id == id, new T { Id = -1 });
+        var itemToPrint = _repository.GetById(id);
 
-        if (itemToPrint.Id == -1)
+        if (itemToPrint == null)
         {
             MenuHelper.AddSeparator();
             throw new ArgumentException($"ERROR : {typeof(T).Name} with Id = {itemId} not exist!");

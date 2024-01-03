@@ -97,19 +97,19 @@ public class ArtistsMenu : Menu<Artist>
         } while (choise != "Q");
     }
 
-    protected override void CreateXmlFile()
-    {
-    }
-
     protected override void ReadXmlFile()
     {
     }
 
-    protected override void CreateCsvFile()
+    protected override void CreateXmlFile()
     {
     }
 
     protected override void ReadCsvFile()
+    {
+    }
+
+    protected override void CreateCsvFile()
     {
     }
 
