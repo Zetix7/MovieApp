@@ -20,6 +20,7 @@ services.AddSingleton<IXmlCreator, XmlCreator>();
 services.AddSingleton<IXmlReader, XmlReader>();
 services.AddSingleton<IMainMenu, MainMenu>();
 services.AddSingleton<IMenu<Movie>, MoviesMenu>();
+services.AddSingleton<IMenu<Artist>, ArtistsMenu>();
 
 var serviceProvider = services.BuildServiceProvider();
 var app = serviceProvider.GetService<IApp>()!;

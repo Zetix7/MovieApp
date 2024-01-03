@@ -6,10 +6,12 @@ namespace MovieApp.UI.Menu;
 public class MainMenu : IMainMenu
 {
     private readonly IMenu<Movie> _movieMenu;
+    private readonly IMenu<Artist> _artistMenu;
 
-    public MainMenu(IMenu<Movie> movieMenu)
+    public MainMenu(IMenu<Movie> movieMenu, IMenu<Artist> artistMenu)
     {
         _movieMenu = movieMenu;
+        _artistMenu = artistMenu;
     }
 
     public void LoadMenu()
@@ -22,6 +24,7 @@ public class MainMenu : IMainMenu
             MenuHelper.AddSeparator();
             Console.WriteLine("Choose one option:");
             Console.WriteLine("\t1. Movies resources.");
+            Console.WriteLine("\t2. Artists resources.");
             Console.WriteLine("\tQ. Quit.");
             Console.Write("\t\tYour choise: ");
             choise = Console.ReadLine()!.Trim().ToUpper();
@@ -31,6 +34,9 @@ public class MainMenu : IMainMenu
             {
                 case "1":
                     _movieMenu.LoadMenu();
+                    break;
+                case "2":
+                    _artistMenu.LoadMenu();
                     break;
                 case "Q":
                     break;
