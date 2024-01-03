@@ -4,5 +4,6 @@ namespace MovieApp.AplicationServices.Components.FileCreator.XmlFile;
 
 public interface IXmlReader
 {
-    List<Movie> ReadMovieXmlFile();
+    List<Movie> ReadMoviesXmlFile();
+    List<Artist> ReadArtistsXmlFile();
 }

@@ -98,7 +98,7 @@ public class MoviesMenu : Menu<Movie>
     protected override void ReadXmlFile()
     {
         MenuHelper.AddSeparator();
-        var movies = _xmlReader.ReadMovieXmlFile();
+        var movies = _xmlReader.ReadMoviesXmlFile();
         foreach (var movie in movies)
         {
             Console.WriteLine(movie);

@@ -6,21 +6,53 @@ namespace MovieApp.AplicationServices.Components.FileCreator.XmlFile;
 
 public class XmlReader : IXmlReader
 {
-    public List<Movie> ReadMovieXmlFile()
+    public List<Artist> ReadArtistsXmlFile()
     {
-        if (!File.Exists($"DataAccess\\Resources\\Files\\movies.xml"))
+        if (!File.Exists(@"DataAccess\Resources\Files\artists.xml"))
         {
-            throw new FileNotFoundException("Not found 'movies.csv' file!");
+            throw new FileNotFoundException("ERROR : Not found 'artists.xml' file!");
         }
 
-        if(new FileInfo($"DataAccess\\Resources\\Files\\movies.xml").Length < 10)
+        if(new FileInfo(@"DataAccess\Resources\Files\artists.xml").Length < 10)
         {
-            throw new FileLoadException("File 'movies.csv' is empty!");
+            throw new FileLoadException("ERROR : File 'artists.xml' is empty!");
+        }
+
+        var document = XDocument.Load(@"DataAccess\Resources\Files\artists.xml");
+
+        try
+        {
+            var artists = document.Element("Artists")!
+            .Elements("Artist")!
+            .Select(x => new Artist
+            {
+                FirstName = x.Attribute("FirstName")!.Value,
+                LastName = x.Attribute("LastName")!.Value
+            }).ToList();
+
+            return artists;
+        }
+        catch (Exception)
+        {
+            throw new Exception("ERROR : File 'artists.xml' is broken!");
+        }
+    }
+
+    public List<Movie> ReadMoviesXmlFile()
+    {
+        if (!File.Exists(@"DataAccess\Resources\Files\movies.xml"))
+        {
+            throw new FileNotFoundException("ERROR : Not found 'movies.csv' file!");
+        }
+
+        if(new FileInfo(@"DataAccess\Resources\Files\movies.xml").Length < 10)
+        {
+            throw new FileLoadException("ERROR : File 'movies.csv' is empty!");
         }
 
         try
         {
-            var xmlMovies = XDocument.Load($"DataAccess\\Resources\\Files\\movies.xml");
+            var xmlMovies = XDocument.Load(@"DataAccess\Resources\Files\movies.xml");
             var movies = xmlMovies.Element("Movies")!
                 .Elements("Movie")!
                 .Select(x => new Movie
@@ -30,11 +62,12 @@ public class XmlReader : IXmlReader
                     Universe = x.Attribute("Universe")!.Value,
                     BoxOffice = decimal.Parse(x.Attribute("BoxOffice")!.Value, CultureInfo.InvariantCulture)
                 }).ToList();
+        
             return movies;
         }
         catch (Exception)
         {
-            throw new Exception("File 'movies.csv' is broken!");
+            throw new Exception("ERROR : File 'movies.csv' is broken!");
         }
     }
 }
