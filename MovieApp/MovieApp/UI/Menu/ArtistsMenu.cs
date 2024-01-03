@@ -111,6 +111,9 @@ public class ArtistsMenu : Menu<Artist>
 
     protected override void CreateCsvFile()
     {
+        _csvCreator.CreateMoviesCsvFileFromRepository();
+        MenuHelper.AddSeparator();
+        Console.WriteLine("INFO : Created artists.csv file.");
     }
 
     protected override void RemoveItemFromRepository()
