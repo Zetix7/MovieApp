@@ -10,6 +10,7 @@ public class MovieAppDbContext : DbContext
     }
 
     public DbSet<Movie> Movies { get; set; }
+    public DbSet<Artist> Artists { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
