@@ -108,7 +108,7 @@ public class MoviesMenu : Menu<Movie>
     protected override void CreateXmlFile()
     {
         MenuHelper.AddSeparator();
-        _xmlCreator.CreateMovieXmlFileFromRepository();
+        _xmlCreator.CreateMoviesXmlFileFromRepository();
         Console.WriteLine("INFO : Created movies.xml file.");
     }
 

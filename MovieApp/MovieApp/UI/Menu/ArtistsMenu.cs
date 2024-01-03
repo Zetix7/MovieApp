@@ -107,6 +107,12 @@ public class ArtistsMenu : Menu<Artist>
 
     protected override void ReadCsvFile()
     {
+        MenuHelper.AddSeparator();
+        var artists = _csvReader.ReadArtistsCsvFile();
+        foreach (var artist in artists)
+        {
+            Console.WriteLine(artist);
+        }
     }
 
     protected override void CreateCsvFile()

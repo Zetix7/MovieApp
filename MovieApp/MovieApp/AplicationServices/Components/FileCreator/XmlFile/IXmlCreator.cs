@@ -2,5 +2,5 @@
 
 public interface IXmlCreator
 {
-    void CreateMovieXmlFileFromRepository();
+    void CreateMoviesXmlFileFromRepository();
 }

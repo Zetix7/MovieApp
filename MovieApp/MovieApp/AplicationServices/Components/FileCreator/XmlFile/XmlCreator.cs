@@ -7,19 +7,20 @@ namespace MovieApp.AplicationServices.Components.FileCreator.XmlFile;
 public class XmlCreator : IXmlCreator
 {
     private readonly IRepository<Movie> _movieRepository;
+    private readonly IRepository<Artist> _artistRepository;
 
     public XmlCreator(IRepository<Movie> movieRepository)
     {
         _movieRepository = movieRepository;
     }
 
-    public void CreateMovieXmlFileFromRepository()
+    public void CreateMoviesXmlFileFromRepository()
     {
         var movies = _movieRepository.GetAll();
 
         if (!movies.Any())
         {
-            throw new ArgumentException("Repository is empty!");
+            throw new ArgumentException("ERROR :Repository is empty!");
         }
 
         var items = new XElement("Movies", movies.Select(x =>
@@ -30,6 +31,6 @@ public class XmlCreator : IXmlCreator
                 new XAttribute("BoxOffice", x.BoxOffice))));
 
         var document = new XDocument(items);
-        document.Save($"DataAccess\\Resources\\Files\\movies.xml");
+        document.Save(@"DataAccess\Resources\Files\movies.xml");
     }
 }
