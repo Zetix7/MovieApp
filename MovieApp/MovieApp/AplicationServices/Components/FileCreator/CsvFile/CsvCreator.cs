@@ -20,14 +20,14 @@ public class CsvCreator : ICsvCreator
 
         if(!artists.Any())
         {
-            throw new ArgumentException("Repository is empty!");
+            throw new ArgumentException("ERROR : Repository is empty!");
         }
 
-        using(var writer = File.CreateText(@"DataAccess\Resources\Files\movies.csv"))
+        using(var writer = File.CreateText(@"DataAccess\Resources\Files\artists.csv"))
         {
             foreach(var artist in artists)
             {
-                writer.WriteLine(artist);
+                writer.WriteLine($"{artist.FirstName},{artist.LastName}");
             }
         }
     }
@@ -38,7 +38,7 @@ public class CsvCreator : ICsvCreator
 
         if (!movies.Any())
         {
-            throw new ArgumentException("Repository is empty!");
+            throw new ArgumentException("ERROR : Repository is empty!");
         }
 
         using (var writer = File.CreateText(@"DataAccess\Resources\Files\movies.csv"))

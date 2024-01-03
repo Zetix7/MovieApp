@@ -97,8 +97,8 @@ public class MoviesMenu : Menu<Movie>
     }
     protected override void ReadXmlFile()
     {
-        var movies = _xmlReader.ReadMovieXmlFile();
         MenuHelper.AddSeparator();
+        var movies = _xmlReader.ReadMovieXmlFile();
         foreach (var movie in movies)
         {
             Console.WriteLine(movie);
@@ -107,15 +107,15 @@ public class MoviesMenu : Menu<Movie>
 
     protected override void CreateXmlFile()
     {
-        _xmlCreator.CreateMovieXmlFileFromRepository();
         MenuHelper.AddSeparator();
+        _xmlCreator.CreateMovieXmlFileFromRepository();
         Console.WriteLine("INFO : Created movies.xml file.");
     }
 
     protected override void ReadCsvFile()
     {
-        var movies = _csvReader.ReadMovieCsvFile();
         MenuHelper.AddSeparator();
+        var movies = _csvReader.ReadMoviesCsvFile();
         foreach (var movie in movies)
         {
             Console.WriteLine(movie);
@@ -124,8 +124,8 @@ public class MoviesMenu : Menu<Movie>
 
     protected override void CreateCsvFile()
     {
-        _csvCreator.CreateMoviesCsvFileFromRepository();
         MenuHelper.AddSeparator();
+        _csvCreator.CreateMoviesCsvFileFromRepository();
         Console.WriteLine("INFO : Created movies.csv file.");
     }
 
