@@ -9,9 +9,28 @@ public class XmlCreator : IXmlCreator
     private readonly IRepository<Movie> _movieRepository;
     private readonly IRepository<Artist> _artistRepository;
 
-    public XmlCreator(IRepository<Movie> movieRepository)
+    public XmlCreator(IRepository<Movie> movieRepository, IRepository<Artist> artistRepository)
     {
         _movieRepository = movieRepository;
+        _artistRepository = artistRepository;
+    }
+
+    public void CreateArtistsXmlFileFromRepository()
+    {
+        var artists = _artistRepository.GetAll();
+
+        if (!artists.Any())
+        {
+            throw new ArgumentException("ERROR : Repository is empty!");
+        }
+
+        var items = new XElement("Artists", artists.Select(x =>
+            new XElement("Artist", 
+                new XAttribute("FirstName", x.FirstName!).Value!,
+                new XAttribute("LastName", x.LastName!).Value!)));
+
+        var document = new XDocument(items);
+        document.Save(@"DataAccess\Resources\Files\artists.xml");
     }
 
     public void CreateMoviesXmlFileFromRepository()
