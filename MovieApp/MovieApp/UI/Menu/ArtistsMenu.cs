@@ -103,6 +103,9 @@ public class ArtistsMenu : Menu<Artist>
 
     protected override void CreateXmlFile()
     {
+        MenuHelper.AddSeparator();
+        _xmlCreator.CreateArtistsXmlFileFromRepository();
+        Console.WriteLine("INFO : Created artists.xml file.");
     }
 
     protected override void ReadCsvFile()
