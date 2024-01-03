@@ -4,6 +4,47 @@ namespace MovieApp.AplicationServices.Components.DataGenerator;
 
 public class DataGenerator : IDataGenerator
 {
+    public List<Artist> GenerateSampleArtists()
+    {
+        return new List<Artist> {
+            new Artist { FirstName = "Robert", LastName = "Downey Jr." },
+            new Artist { FirstName = "Gweneth", LastName = "Paltrow" },
+            new Artist { FirstName = "Samuel L.", LastName = "Jackson" },
+            new Artist { FirstName = "Chris", LastName = "Hemsworth" },
+            new Artist { FirstName = "Chris", LastName = "Evans" },
+            new Artist { FirstName = "Chris", LastName = "Pratt" },
+            new Artist { FirstName = "Hayley", LastName = "Atwell" },
+            new Artist { FirstName = "Vin", LastName = "Diesel" },
+            new Artist { FirstName = "Emily", LastName = "Van Camp" },
+            new Artist { FirstName = "Michelle", LastName = "Rodriguez" },
+            new Artist { FirstName = "Elsa", LastName = "Pataky" },
+            new Artist { FirstName = "Dwayne", LastName = "Johnson" },
+            new Artist { FirstName = "Cole", LastName = "Hauser" },
+            new Artist { FirstName = "Eva", LastName = "Mendes" },
+            new Artist { FirstName = "Daniel", LastName = "Raddclife" },
+            new Artist { FirstName = "Emma", LastName = "Watson" },
+            new Artist { FirstName = "Rupert", LastName = "Grint" },
+            new Artist { FirstName = "Richard", LastName = "Harris" },
+            new Artist { FirstName = "Tom", LastName = "Holland" },
+            new Artist { FirstName = "Bradley", LastName = "Cooper" },
+            new Artist { FirstName = "Karen", LastName = "Gillan" },
+            new Artist { FirstName = "Natalie", LastName = "Portman" },
+            new Artist { FirstName = "Jeremy", LastName = "Renner" },
+            new Artist { FirstName = "Tom", LastName = "Hiddleston" },
+            new Artist { FirstName = "Sebastian", LastName = "Stan" },
+            new Artist { FirstName = "Scarlett", LastName = "Johansson" },
+            new Artist { FirstName = "Brie", LastName = "Larson" },
+            new Artist { FirstName = "Elizabeth", LastName = "Olsen" },
+            new Artist { FirstName = "Jason", LastName = "Statham" },
+            new Artist { FirstName = "Paul", LastName = "Walker" },
+            new Artist { FirstName = "Jordana", LastName = "Brewster" },
+            new Artist { FirstName = "Tyrese", LastName = "Gibson" },
+            new Artist { FirstName = "Lucas", LastName = "Black" },
+            new Artist { FirstName = "Sung", LastName = "Kang" },
+            new Artist { FirstName = "Gal", LastName = "Gadot" },
+        };
+    }
+
     public List<Movie> GenerateSampleMovies()
     {
         return new List<Movie>()
@@ -36,16 +77,16 @@ public class DataGenerator : IDataGenerator
             new Movie { Title = "Spider-Man No Way Home", Year = 2021, Universe = "Marvel", BoxOffice = 1_910_600_000.00M },
             new Movie { Title = "Doctor Strange in the Multiverse of Madness", Year = 2022, Universe = "Marvel", BoxOffice = 959_000_000.00M },
 
-            new Movie { Title = "The Fast and the Furious", Year = 2001, Universe = "Fast adn Furious", BoxOffice = 206_400_000.00M },
-            new Movie { Title = "2 Fast 2 Furious", Year = 2003, Universe = "Fast adn Furious", BoxOffice = 236_400_000.00M },
-            new Movie { Title = "The Fast and the Furious: Tokyo Drift", Year = 2006, Universe = "Fast adn Furious", BoxOffice = 157_800_000.00M },
-            new Movie { Title = "Fast & Furious", Year = 2009, Universe = "Fast adn Furious", BoxOffice = 359_300_000.00M },
-            new Movie { Title = "Fast Five", Year = 2011, Universe = "Fast adn Furious", BoxOffice = 630_100_000.00M },
-            new Movie { Title = "Fast and Furious 6", Year = 2013, Universe = "Fast adn Furious", BoxOffice = 789_300_000.00M },
-            new Movie { Title = "Furious 7", Year = 2015, Universe = "Fast adn Furious", BoxOffice = 1_514_500_000.00M },
-            new Movie { Title = "The Fate of the Furious", Year = 2017, Universe = "Fast adn Furious", BoxOffice = 1_236_700_000.00M },
-            new Movie { Title = "Fast & Furious Presents: Hoobs and Show", Year = 2019, Universe = "Fast adn Furious", BoxOffice = 760_700_000.00M },
-            new Movie { Title = "F9: The Fast Saga", Year = 2021, Universe = "Fast adn Furious", BoxOffice = 720_700_000.00M },
+            new Movie { Title = "The Fast and the Furious", Year = 2001, Universe = "Fast and Furious", BoxOffice = 206_400_000.00M },
+            new Movie { Title = "2 Fast 2 Furious", Year = 2003, Universe = "Fast and Furious", BoxOffice = 236_400_000.00M },
+            new Movie { Title = "The Fast and the Furious: Tokyo Drift", Year = 2006, Universe = "Fast and Furious", BoxOffice = 157_800_000.00M },
+            new Movie { Title = "Fast & Furious", Year = 2009, Universe = "Fast and Furious", BoxOffice = 359_300_000.00M },
+            new Movie { Title = "Fast Five", Year = 2011, Universe = "Fast and Furious", BoxOffice = 630_100_000.00M },
+            new Movie { Title = "Fast and Furious 6", Year = 2013, Universe = "Fast and Furious", BoxOffice = 789_300_000.00M },
+            new Movie { Title = "Furious 7", Year = 2015, Universe = "Fast and Furious", BoxOffice = 1_514_500_000.00M },
+            new Movie { Title = "The Fate of the Furious", Year = 2017, Universe = "Fast and Furious", BoxOffice = 1_236_700_000.00M },
+            new Movie { Title = "Fast & Furious Presents: Hoobs and Show", Year = 2019, Universe = "Fast and Furious", BoxOffice = 760_700_000.00M },
+            new Movie { Title = "F9: The Fast Saga", Year = 2021, Universe = "Fast and Furious", BoxOffice = 720_700_000.00M },
 
             new Movie { Title = "Harry Potter and the Philosophers Stone", Year = 2001, Universe = "Harry Potter", BoxOffice = 965_000_000.00M },
             new Movie { Title = "Harry Potter and the Chember of Secrets", Year = 2002, Universe = "Harry Potter", BoxOffice = 874_900_000.00M },

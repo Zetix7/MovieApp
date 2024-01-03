@@ -5,4 +5,6 @@ namespace MovieApp.AplicationServices.Components.DataGenerator;
 public interface IDataGenerator
 {
     List<Movie> GenerateSampleMovies();
+    List<Artist> GenerateSampleArtists()
+;
 }
