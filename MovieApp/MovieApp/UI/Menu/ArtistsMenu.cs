@@ -99,6 +99,12 @@ public class ArtistsMenu : Menu<Artist>
 
     protected override void ReadXmlFile()
     {
+        MenuHelper.AddSeparator();
+        var artists = _xmlReader.ReadArtistsXmlFile();
+        foreach (var artist in artists)
+        {
+            Console.WriteLine(artist);
+        }
     }
 
     protected override void CreateXmlFile()
@@ -183,6 +189,6 @@ public class ArtistsMenu : Menu<Artist>
         _artistRepository.Save();
 
         MenuHelper.AddSeparator();
-        Console.WriteLine($"INFO : Artist added to repository.\n\n{artists.LastOrDefault(x => x.FirstName == firstName && x.LastName == lastName)}");
+        Console.WriteLine($"INFO : Artist added to repository.\n\n{_artistRepository.GetAll().LastOrDefault(x => x.FirstName == firstName)}");
     }
 }

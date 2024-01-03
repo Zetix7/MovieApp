@@ -26,8 +26,8 @@ public class XmlCreator : IXmlCreator
 
         var items = new XElement("Artists", artists.Select(x =>
             new XElement("Artist", 
-                new XAttribute("FirstName", x.FirstName!).Value!,
-                new XAttribute("LastName", x.LastName!).Value!)));
+                new XAttribute("FirstName", x.FirstName!),
+                new XAttribute("LastName", x.LastName!))));
 
         var document = new XDocument(items);
         document.Save(@"DataAccess\Resources\Files\artists.xml");
