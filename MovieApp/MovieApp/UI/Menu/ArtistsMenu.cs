@@ -3,17 +3,29 @@ using MovieApp.AplicationServices.Components.FileCreator.XmlFile;
 using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
 using MovieApp.UI.Menu.Extensions;
+using System.Xml;
 
 namespace MovieApp.UI.Menu;
 
 public class ArtistsMenu : Menu<Artist>
 {
+    private readonly IRepository<Artist> _artistRepository;
+    private readonly ICsvCreator _csvCreator;
+    private readonly ICsvReader _csvReader;
+    private readonly IXmlCreator _xmlCreator;
+    private readonly IXmlReader _xmlReader;
+
     public ArtistsMenu(IRepository<Artist> artistRepository,
         ICsvCreator csvCreator,
         ICsvReader csvReader,
         IXmlCreator xmlCreator,
         IXmlReader xmlReader) : base(artistRepository)
     {
+        _artistRepository = artistRepository;
+        _csvCreator = csvCreator;
+        _csvReader = csvReader;
+        _xmlCreator = xmlCreator;
+        _xmlReader = xmlReader;
     }
 
     public override void LoadMenu()
@@ -107,5 +119,23 @@ public class ArtistsMenu : Menu<Artist>
 
     protected override void AddNewItemToRepository()
     {
+        MenuHelper.AddSeparator();
+        Console.Write("Insert FirstName: ");
+        var firstName = Console.ReadLine()!;
+        Console.Write("Insert LastName: ");
+        var lastName = Console.ReadLine()!;
+
+        var artists = _artistRepository.GetAll();
+        if (artists.Where(x => x.FirstName == firstName && x.LastName == lastName).Any())
+        {
+            MenuHelper.AddSeparator();
+            throw new ArgumentException($"ERROR : Artist exists in repository!");
+        }
+
+        _artistRepository.Add(new Artist { FirstName = firstName, LastName = lastName });
+        _artistRepository.Save();
+        
+        MenuHelper.AddSeparator();
+        Console.WriteLine($"INFO : Artist added to repository.\n\n{artists.LastOrDefault(x => x.FirstName == firstName && x.LastName == lastName)}");
     }
 }
