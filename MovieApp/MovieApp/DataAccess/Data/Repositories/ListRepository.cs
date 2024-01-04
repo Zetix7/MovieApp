@@ -6,6 +6,8 @@ public class ListRepository<T> : IRepository<T> where T : class, IEntity, new()
 {
     private readonly List<T> _items = new();
 
+    public event EventHandler<T?> ItemAdded;
+
     public IEnumerable<T> GetAll()
     {
         return _items.OrderBy(x => x.Id).ToList();

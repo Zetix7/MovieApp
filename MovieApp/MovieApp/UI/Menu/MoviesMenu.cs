@@ -207,11 +207,15 @@ public class MoviesMenu : Menu<Movie>
             throw new ArgumentException("ERROR : Movie exist in repository!");
         }
 
+        _movieRepository.ItemAdded += PrintMessageOnItemAdded!;
         _movieRepository.Add(new Movie { Title = title, Year = newYear, Universe = universe, BoxOffice = newBoxOffice });
         _movieRepository.Save();
+    }
 
+    private void PrintMessageOnItemAdded(object sender, Movie movie)
+    {
         MenuHelper.AddSeparator();
-        Console.WriteLine($"INFO : New movie added to repository.\n\n{_movieRepository.GetAll().LastOrDefault(x => x.Title == title)}");
+        Console.WriteLine($"EVENT INFO : New movie added to repository.\n\n{movie}");
     }
 
     private void PrintMessageOnMoviesXmlFileRead(object sender, EventArgs e)
