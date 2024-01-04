@@ -95,6 +95,7 @@ public class MoviesMenu : Menu<Movie>
             }
         } while (choise != "Q");
     }
+
     protected override void ReadXmlFile()
     {
         MenuHelper.AddSeparator();
@@ -115,6 +116,8 @@ public class MoviesMenu : Menu<Movie>
     protected override void ReadCsvFile()
     {
         MenuHelper.AddSeparator();
+        _csvReader.ReadMoviesCsvFileEvent += PrintMessageOnReadMoviesCsvFile!;
+
         var movies = _csvReader.ReadMoviesCsvFile();
         foreach (var movie in movies)
         {
@@ -206,5 +209,11 @@ public class MoviesMenu : Menu<Movie>
 
         MenuHelper.AddSeparator();
         Console.WriteLine($"INFO : New movie added to repository.\n\n{_movieRepository.GetAll().LastOrDefault(x => x.Title == title)}");
+    }
+
+    private void PrintMessageOnReadMoviesCsvFile(object sender, EventArgs e)
+    {
+        Console.WriteLine("INFO : movies.csv file read successfully.");
+        MenuHelper.AddSeparator();
     }
 }

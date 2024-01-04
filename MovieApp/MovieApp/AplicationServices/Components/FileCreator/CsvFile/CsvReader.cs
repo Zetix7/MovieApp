@@ -5,6 +5,8 @@ namespace MovieApp.AplicationServices.Components.FileCreator.CsvFile;
 
 public class CsvReader : ICsvReader
 {
+    public event EventHandler<EventArgs?> ReadMoviesCsvFileEvent;
+
     public List<Movie> ReadMoviesCsvFile()
     {
         if (!File.Exists(@"DataAccess\Resources\Files\movies.csv"))
@@ -30,6 +32,8 @@ public class CsvReader : ICsvReader
                     BoxOffice = decimal.Parse(movie[3], CultureInfo.InvariantCulture),
                 };
             }).ToList();
+
+            ReadMoviesCsvFileEvent?.Invoke(this, new EventArgs());
 
             return movies;
         }

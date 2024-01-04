@@ -3,7 +3,6 @@ using MovieApp.AplicationServices.Components.FileCreator.XmlFile;
 using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
 using MovieApp.UI.Menu.Extensions;
-using System.Xml;
 
 namespace MovieApp.UI.Menu;
 
