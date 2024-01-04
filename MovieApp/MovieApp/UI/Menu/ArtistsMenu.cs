@@ -116,6 +116,8 @@ public class ArtistsMenu : Menu<Artist>
     protected override void ReadCsvFile()
     {
         MenuHelper.AddSeparator();
+        _csvReader.ReadArtistsCsvFileEvent += PrintMessageOnReadArtistsCsvFile;
+
         var artists = _csvReader.ReadArtistsCsvFile();
         foreach (var artist in artists)
         {
@@ -189,5 +191,11 @@ public class ArtistsMenu : Menu<Artist>
 
         MenuHelper.AddSeparator();
         Console.WriteLine($"INFO : Artist added to repository.\n\n{_artistRepository.GetAll().LastOrDefault(x => x.FirstName == firstName)}");
+    }
+
+    private void PrintMessageOnReadArtistsCsvFile(object sender, EventArgs e)
+    {
+        Console.WriteLine("INFO : artists.csv file read successfully.");
+        MenuHelper.AddSeparator();
     }
 }

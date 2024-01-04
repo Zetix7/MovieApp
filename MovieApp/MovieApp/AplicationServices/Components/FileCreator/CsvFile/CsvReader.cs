@@ -6,6 +6,7 @@ namespace MovieApp.AplicationServices.Components.FileCreator.CsvFile;
 public class CsvReader : ICsvReader
 {
     public event EventHandler<EventArgs?> ReadMoviesCsvFileEvent;
+    public event EventHandler<EventArgs?> ReadArtistsCsvFileEvent;
 
     public List<Movie> ReadMoviesCsvFile()
     {
@@ -66,6 +67,8 @@ public class CsvReader : ICsvReader
                     LastName = artist[1],
                 };
             }).ToList();
+
+            ReadArtistsCsvFileEvent?.Invoke(this, new EventArgs());
 
             return artists;
         }
