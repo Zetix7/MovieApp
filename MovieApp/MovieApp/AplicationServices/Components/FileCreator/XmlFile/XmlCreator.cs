@@ -16,6 +16,7 @@ public class XmlCreator : IXmlCreator
     }
 
     public event EventHandler<EventArgs?> MoviesXmlFileCreated;
+    public event EventHandler<EventArgs?> ArtistsXmlFileCreated;
 
     public void CreateArtistsXmlFileFromRepository()
     {
@@ -33,6 +34,8 @@ public class XmlCreator : IXmlCreator
 
         var document = new XDocument(items);
         document.Save(@"DataAccess\Resources\Files\artists.xml");
+
+        ArtistsXmlFileCreated?.Invoke(this, new EventArgs());
     }
 
     public void CreateMoviesXmlFileFromRepository()

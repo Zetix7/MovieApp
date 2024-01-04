@@ -109,8 +109,8 @@ public class ArtistsMenu : Menu<Artist>
     protected override void CreateXmlFile()
     {
         MenuHelper.AddSeparator();
+        _xmlCreator.ArtistsXmlFileCreated += PrintMessageOnArtistsXmlFileCreated!;
         _xmlCreator.CreateArtistsXmlFileFromRepository();
-        Console.WriteLine("INFO : Created artists.xml file.");
     }
 
     protected override void ReadCsvFile()
@@ -191,6 +191,11 @@ public class ArtistsMenu : Menu<Artist>
 
         MenuHelper.AddSeparator();
         Console.WriteLine($"INFO : Artist added to repository.\n\n{_artistRepository.GetAll().LastOrDefault(x => x.FirstName == firstName)}");
+    }
+
+    private void PrintMessageOnArtistsXmlFileCreated(object sender, EventArgs e)
+    {
+        Console.WriteLine("EVENT INFO : artists.xml file created successfully.");
     }
 
     private void PrintMessageOnArtistsCsvFileCreated(object sender, EventArgs e)
