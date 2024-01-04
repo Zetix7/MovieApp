@@ -2,6 +2,8 @@
 
 public interface IXmlCreator
 {
+    event EventHandler<EventArgs?> MoviesXmlFileCreated;
+
     void CreateMoviesXmlFileFromRepository();
     void CreateArtistsXmlFileFromRepository();
 }

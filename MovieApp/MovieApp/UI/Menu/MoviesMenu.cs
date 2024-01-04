@@ -109,8 +109,8 @@ public class MoviesMenu : Menu<Movie>
     protected override void CreateXmlFile()
     {
         MenuHelper.AddSeparator();
+        _xmlCreator.MoviesXmlFileCreated += PrintMessageOnMoviesXmlFileCreated!;
         _xmlCreator.CreateMoviesXmlFileFromRepository();
-        Console.WriteLine("INFO : Created movies.xml file.");
     }
 
     protected override void ReadCsvFile()
@@ -209,6 +209,11 @@ public class MoviesMenu : Menu<Movie>
 
         MenuHelper.AddSeparator();
         Console.WriteLine($"INFO : New movie added to repository.\n\n{_movieRepository.GetAll().LastOrDefault(x => x.Title == title)}");
+    }
+
+    private void PrintMessageOnMoviesXmlFileCreated(object sender, EventArgs e)
+    {
+        Console.WriteLine("EVENT INFO : movies.xml file created successfully.");
     }
 
     private void PrintMessageOnMoviesCsvFileCreated(object sender, EventArgs e)
