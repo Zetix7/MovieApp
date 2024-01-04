@@ -94,6 +94,15 @@ public class ArtistsMenu : Menu<Artist>
             {
                 Console.WriteLine(e.Message);
             }
+            finally
+            {
+                _xmlReader.ArtistsXmlFileRead -= PrintMessageOnArtistsXmlFileRead!;
+                _xmlCreator.ArtistsXmlFileCreated -= PrintMessageOnArtistsXmlFileCreated!;
+                _csvReader.ReadArtistsCsvFileEvent -= PrintMessageOnReadArtistsCsvFile!;
+                _csvCreator.ArtistsCsvFileCreated -= PrintMessageOnArtistsCsvFileCreated!;
+                _artistRepository.ItemAdded -= ArtistAddedOnItemAdded!;
+                _artistRepository.ItemRemoved -= ArtistRemovedOnItemRemoved!;
+            }
         } while (choise != "Q");
     }
 
@@ -164,9 +173,9 @@ public class ArtistsMenu : Menu<Artist>
         MenuHelper.AddSeparator();
         if (choise == "Y")
         {
+            _artistRepository.ItemRemoved += ArtistRemovedOnItemRemoved!;
             _artistRepository.Remove(artist);
             _artistRepository.Save();
-            Console.WriteLine("INFO : Artist removed successfully.");
         }
         else
         {
@@ -189,11 +198,20 @@ public class ArtistsMenu : Menu<Artist>
             throw new ArgumentException($"ERROR : Artist exists in repository!");
         }
 
+        _artistRepository.ItemAdded += ArtistAddedOnItemAdded!;
         _artistRepository.Add(new Artist { FirstName = firstName, LastName = lastName });
         _artistRepository.Save();
+    }
 
+    private void ArtistRemovedOnItemRemoved(object sender, Artist artist)
+    {
+        Console.WriteLine("EVENT INFO : Artist removed successfully.");
+    }
+
+    private void ArtistAddedOnItemAdded(object sender, Artist artist)
+    {
         MenuHelper.AddSeparator();
-        Console.WriteLine($"INFO : Artist added to repository.\n\n{_artistRepository.GetAll().LastOrDefault(x => x.FirstName == firstName)}");
+        Console.WriteLine($"IVENT INFO : Artist added to repository.\n\n{artist}");
     }
 
     private void PrintMessageOnArtistsXmlFileRead(object sender, EventArgs e)

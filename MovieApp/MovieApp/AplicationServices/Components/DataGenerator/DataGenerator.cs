@@ -51,10 +51,11 @@ public class DataGenerator : IDataGenerator
         {
             new Movie { Title = "Iron Man", Year = 2008, Universe = "Marvel", BoxOffice = 586_000_000.01M },
             new Movie { Title = "Incredible Hulk", Year = 2008, Universe = "Marvel", BoxOffice = 264_000_000.01M },
+            new Movie { Title = "Iron Man 2", Year = 2010, Universe = "Marvel", BoxOffice = 623_933_000.01M },
             new Movie { Title = "Thor", Year = 2011, Universe = "Marvel", BoxOffice = 625_000_000.01M },
             new Movie { Title = "Captain America: The First Avenger", Year = 2011, Universe = "Marvel", BoxOffice = 371_000_000.01M },
             new Movie { Title = "Avengers", Year = 2012, Universe = "Marvel", BoxOffice = 1_521_000_000.00M },
-            new Movie { Title = "Iron Man 2", Year = 2013, Universe = "Marvel", BoxOffice = 1_219_000_000.00M },
+            new Movie { Title = "Iron Man 3", Year = 2010, Universe = "Marvel", BoxOffice = 1_219_000_000.00M },
             new Movie { Title = "Thor: The Dark World", Year = 2013, Universe = "Marvel", BoxOffice = 648_000_000.00M },
             new Movie { Title = "Captain America: The Winter Soldier", Year = 2014, Universe = "Marvel", BoxOffice = 716_000_000.00M },
             new Movie { Title = "Guardians of the Galaxy", Year = 2014, Universe = "Marvel", BoxOffice = 776_000_000.00M },

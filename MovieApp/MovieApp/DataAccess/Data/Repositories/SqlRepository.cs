@@ -9,6 +9,7 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
     private readonly DbSet<T> _dbSet;
 
     public event EventHandler<T?> ItemAdded;
+    public event EventHandler<T?> ItemRemoved;
 
     public SqlRepository(MovieAppDbContext dbContext)
     {
@@ -27,7 +28,11 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
         ItemAdded?.Invoke(this, item);
     }
 
-    public void Remove(T item) => _dbSet.Remove(item);
+    public void Remove(T item)
+    {
+        _dbSet.Remove(item);
+        ItemRemoved?.Invoke(this, item);
+    }
 
     public void Save() => _dbContext.SaveChanges();
 }

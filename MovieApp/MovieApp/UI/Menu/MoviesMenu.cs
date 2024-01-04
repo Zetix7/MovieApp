@@ -94,6 +94,15 @@ public class MoviesMenu : Menu<Movie>
             {
                 Console.WriteLine(e.Message);
             }
+            finally
+            {
+                _xmlReader.MoviesXmlFileRead -= PrintMessageOnMoviesXmlFileRead!;
+                _xmlCreator.MoviesXmlFileCreated -= PrintMessageOnMoviesXmlFileCreated!;
+                _csvReader.ReadMoviesCsvFileEvent -= PrintMessageOnReadMoviesCsvFile!;
+                _csvCreator.MoviesCsvFileCreated -= PrintMessageOnMoviesCsvFileCreated!;
+                _movieRepository.ItemAdded -= MovieAddedOnItemAdded!;
+                _movieRepository.ItemRemoved -= MovieRemovedOnItemRemoved!;
+            }
         } while (choise != "Q");
     }
 
@@ -114,6 +123,7 @@ public class MoviesMenu : Menu<Movie>
         MenuHelper.AddSeparator();
         _xmlCreator.MoviesXmlFileCreated += PrintMessageOnMoviesXmlFileCreated!;
         _xmlCreator.CreateMoviesXmlFileFromRepository();
+
     }
 
     protected override void ReadCsvFile()
@@ -164,9 +174,9 @@ public class MoviesMenu : Menu<Movie>
         MenuHelper.AddSeparator();
         if (choise.Equals("Y"))
         {
+            _movieRepository.ItemRemoved += MovieRemovedOnItemRemoved!;
             _movieRepository.Remove(movie!);
             _movieRepository.Save();
-            Console.WriteLine("INFO : Movie removed successfully.");
         }
         else
         {
@@ -207,12 +217,17 @@ public class MoviesMenu : Menu<Movie>
             throw new ArgumentException("ERROR : Movie exist in repository!");
         }
 
-        _movieRepository.ItemAdded += PrintMessageOnItemAdded!;
+        _movieRepository.ItemAdded += MovieAddedOnItemAdded!;
         _movieRepository.Add(new Movie { Title = title, Year = newYear, Universe = universe, BoxOffice = newBoxOffice });
         _movieRepository.Save();
     }
 
-    private void PrintMessageOnItemAdded(object sender, Movie movie)
+    private void MovieRemovedOnItemRemoved(object sender, Movie movie)
+    {
+        Console.WriteLine("EVENT INFO : Movie removed successfully.");
+    }
+
+    private void MovieAddedOnItemAdded(object sender, Movie movie)
     {
         MenuHelper.AddSeparator();
         Console.WriteLine($"EVENT INFO : New movie added to repository.\n\n{movie}");
