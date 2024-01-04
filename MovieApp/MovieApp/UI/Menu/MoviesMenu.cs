@@ -13,6 +13,7 @@ public class MoviesMenu : Menu<Movie>
     private readonly ICsvReader _csvReader;
     private readonly IXmlCreator _xmlCreator;
     private readonly IXmlReader _xmlReader;
+    private const string FILENAME = "movies";
 
     public MoviesMenu(IRepository<Movie> movieRepository,
         ICsvCreator csvCreator,
@@ -99,6 +100,8 @@ public class MoviesMenu : Menu<Movie>
     protected override void ReadXmlFile()
     {
         MenuHelper.AddSeparator();
+        _xmlReader.MoviesXmlFileRead += PrintMessageOnMoviesXmlFileRead!;
+
         var movies = _xmlReader.ReadMoviesXmlFile();
         foreach (var movie in movies)
         {
@@ -211,19 +214,25 @@ public class MoviesMenu : Menu<Movie>
         Console.WriteLine($"INFO : New movie added to repository.\n\n{_movieRepository.GetAll().LastOrDefault(x => x.Title == title)}");
     }
 
+    private void PrintMessageOnMoviesXmlFileRead(object sender, EventArgs e)
+    {
+        Console.WriteLine($"EVENT INFO : {FILENAME}.xml file read successfully.");
+        MenuHelper.AddSeparator();
+    }
+
     private void PrintMessageOnMoviesXmlFileCreated(object sender, EventArgs e)
     {
-        Console.WriteLine("EVENT INFO : movies.xml file created successfully.");
+        Console.WriteLine($"EVENT INFO : {FILENAME}.xml file created successfully.");
     }
 
     private void PrintMessageOnMoviesCsvFileCreated(object sender, EventArgs e)
     {
-        Console.WriteLine("EVENT INFO : movies.csv file created successfully.");
+        Console.WriteLine($"EVENT INFO : {FILENAME}.csv file created successfully.");
     }
 
     private void PrintMessageOnReadMoviesCsvFile(object sender, EventArgs e)
     {
-        Console.WriteLine("EVENT INFO : movies.csv file read successfully.");
+        Console.WriteLine($"EVENT INFO : {FILENAME}.csv file read successfully.");
         MenuHelper.AddSeparator();
     }
 }

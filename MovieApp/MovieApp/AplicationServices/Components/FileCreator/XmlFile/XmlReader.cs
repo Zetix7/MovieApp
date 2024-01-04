@@ -6,6 +6,8 @@ namespace MovieApp.AplicationServices.Components.FileCreator.XmlFile;
 
 public class XmlReader : IXmlReader
 {
+    public event EventHandler<EventArgs?> MoviesXmlFileRead;
+
     public List<Artist> ReadArtistsXmlFile()
     {
         if (!File.Exists(@"DataAccess\Resources\Files\artists.xml"))
@@ -62,7 +64,9 @@ public class XmlReader : IXmlReader
                     Universe = x.Attribute("Universe")!.Value,
                     BoxOffice = decimal.Parse(x.Attribute("BoxOffice")!.Value, CultureInfo.InvariantCulture)
                 }).ToList();
-        
+
+            MoviesXmlFileRead?.Invoke(this, new EventArgs());
+
             return movies;
         }
         catch (Exception)
