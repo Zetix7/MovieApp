@@ -7,6 +7,7 @@ namespace MovieApp.AplicationServices.Components.FileCreator.XmlFile;
 public class XmlReader : IXmlReader
 {
     public event EventHandler<EventArgs?> MoviesXmlFileRead;
+    public event EventHandler<EventArgs?> ArtistsXmlFileRead;
 
     public List<Artist> ReadArtistsXmlFile()
     {
@@ -31,6 +32,8 @@ public class XmlReader : IXmlReader
                 FirstName = x.Attribute("FirstName")!.Value,
                 LastName = x.Attribute("LastName")!.Value
             }).ToList();
+
+            ArtistsXmlFileRead?.Invoke(this, new EventArgs());
 
             return artists;
         }

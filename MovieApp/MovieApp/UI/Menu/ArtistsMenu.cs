@@ -13,6 +13,7 @@ public class ArtistsMenu : Menu<Artist>
     private readonly ICsvReader _csvReader;
     private readonly IXmlCreator _xmlCreator;
     private readonly IXmlReader _xmlReader;
+    private const string FILENAME = "artists";
 
     public ArtistsMenu(IRepository<Artist> artistRepository,
         ICsvCreator csvCreator,
@@ -99,6 +100,8 @@ public class ArtistsMenu : Menu<Artist>
     protected override void ReadXmlFile()
     {
         MenuHelper.AddSeparator();
+        _xmlReader.ArtistsXmlFileRead += PrintMessageOnArtistsXmlFileRead!;
+
         var artists = _xmlReader.ReadArtistsXmlFile();
         foreach (var artist in artists)
         {
@@ -193,19 +196,25 @@ public class ArtistsMenu : Menu<Artist>
         Console.WriteLine($"INFO : Artist added to repository.\n\n{_artistRepository.GetAll().LastOrDefault(x => x.FirstName == firstName)}");
     }
 
+    private void PrintMessageOnArtistsXmlFileRead(object sender, EventArgs e)
+    {
+        Console.WriteLine($"EVENT INFO : {FILENAME}.xml file read successfully.");
+        MenuHelper.AddSeparator();
+    }
+
     private void PrintMessageOnArtistsXmlFileCreated(object sender, EventArgs e)
     {
-        Console.WriteLine("EVENT INFO : artists.xml file created successfully.");
+        Console.WriteLine($"EVENT INFO : {FILENAME}.xml file created successfully.");
     }
 
     private void PrintMessageOnArtistsCsvFileCreated(object sender, EventArgs e)
     {
-        Console.WriteLine("EVENT INFO : artists.csv file created successfully.");
+        Console.WriteLine($"EVENT INFO : {FILENAME}.csv file created successfully.");
     }
 
     private void PrintMessageOnReadArtistsCsvFile(object sender, EventArgs e)
     {
-        Console.WriteLine("EVENT INFO : artists.csv file read successfully.");
+        Console.WriteLine($"EVENT INFO : {FILENAME}.csv file read successfully.");
         MenuHelper.AddSeparator();
     }
 }
