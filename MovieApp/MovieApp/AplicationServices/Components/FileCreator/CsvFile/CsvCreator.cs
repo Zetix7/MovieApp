@@ -15,6 +15,7 @@ public class CsvCreator : ICsvCreator
     }
 
     public event EventHandler<EventArgs?> MoviesCsvFileCreated;
+    public event EventHandler<EventArgs?> ArtistsCsvFileCreated;
 
     public void CreateArtistsCsvFileFromRepository()
     {
@@ -32,6 +33,8 @@ public class CsvCreator : ICsvCreator
                 writer.WriteLine($"{artist.FirstName},{artist.LastName}");
             }
         }
+
+        ArtistsCsvFileCreated?.Invoke(this, new EventArgs());
     }
 
     public void CreateMoviesCsvFileFromRepository()

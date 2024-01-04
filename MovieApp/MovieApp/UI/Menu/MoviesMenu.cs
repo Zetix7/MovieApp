@@ -213,12 +213,12 @@ public class MoviesMenu : Menu<Movie>
 
     private void PrintMessageOnMoviesCsvFileCreated(object sender, EventArgs e)
     {
-        Console.WriteLine("INFO : movies.csv file created successfully.");
+        Console.WriteLine("EVENT INFO : movies.csv file created successfully.");
     }
 
     private void PrintMessageOnReadMoviesCsvFile(object sender, EventArgs e)
     {
-        Console.WriteLine("INFO : movies.csv file read successfully.");
+        Console.WriteLine("EVENT INFO : movies.csv file read successfully.");
         MenuHelper.AddSeparator();
     }
 }

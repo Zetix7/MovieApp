@@ -128,8 +128,8 @@ public class ArtistsMenu : Menu<Artist>
     protected override void CreateCsvFile()
     {
         MenuHelper.AddSeparator();
+        _csvCreator.ArtistsCsvFileCreated += PrintMessageOnArtistsCsvFileCreated!;
         _csvCreator.CreateArtistsCsvFileFromRepository();
-        Console.WriteLine("INFO : Created artists.csv file.");
     }
 
     protected override void RemoveItemFromRepository()
@@ -193,9 +193,14 @@ public class ArtistsMenu : Menu<Artist>
         Console.WriteLine($"INFO : Artist added to repository.\n\n{_artistRepository.GetAll().LastOrDefault(x => x.FirstName == firstName)}");
     }
 
+    private void PrintMessageOnArtistsCsvFileCreated(object sender, EventArgs e)
+    {
+        Console.WriteLine("EVENT INFO : artists.csv file created successfully.");
+    }
+
     private void PrintMessageOnReadArtistsCsvFile(object sender, EventArgs e)
     {
-        Console.WriteLine("INFO : artists.csv file read successfully.");
+        Console.WriteLine("EVENT INFO : artists.csv file read successfully.");
         MenuHelper.AddSeparator();
     }
 }
