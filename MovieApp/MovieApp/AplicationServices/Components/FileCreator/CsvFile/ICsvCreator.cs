@@ -2,6 +2,8 @@
 
 public interface ICsvCreator
 {
+    event EventHandler<EventArgs?> MoviesCsvFileCreated;
+
     void CreateMoviesCsvFileFromRepository();
     void CreateArtistsCsvFileFromRepository();
 }

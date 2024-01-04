@@ -14,6 +14,8 @@ public class CsvCreator : ICsvCreator
         _artistRepository = artistRepository;
     }
 
+    public event EventHandler<EventArgs?> MoviesCsvFileCreated;
+
     public void CreateArtistsCsvFileFromRepository()
     {
         var artists = _artistRepository.GetAll();
@@ -49,6 +51,8 @@ public class CsvCreator : ICsvCreator
                 writer.WriteLine($"{movie.Title},{movie.Year},{movie.Universe},{newBoxOffice}");
             }
         }
+
+        MoviesCsvFileCreated?.Invoke(this, new EventArgs());
     }
 
     private static string ConvertBoxOfficeValue(Movie movie)

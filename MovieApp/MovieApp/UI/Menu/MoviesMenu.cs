@@ -128,8 +128,8 @@ public class MoviesMenu : Menu<Movie>
     protected override void CreateCsvFile()
     {
         MenuHelper.AddSeparator();
+        _csvCreator.MoviesCsvFileCreated += PrintMessageOnMoviesCsvFileCreated!;
         _csvCreator.CreateMoviesCsvFileFromRepository();
-        Console.WriteLine("INFO : Created movies.csv file.");
     }
 
     protected override void RemoveItemFromRepository()
@@ -209,6 +209,11 @@ public class MoviesMenu : Menu<Movie>
 
         MenuHelper.AddSeparator();
         Console.WriteLine($"INFO : New movie added to repository.\n\n{_movieRepository.GetAll().LastOrDefault(x => x.Title == title)}");
+    }
+
+    private void PrintMessageOnMoviesCsvFileCreated(object sender, EventArgs e)
+    {
+        Console.WriteLine("INFO : movies.csv file created successfully.");
     }
 
     private void PrintMessageOnReadMoviesCsvFile(object sender, EventArgs e)
