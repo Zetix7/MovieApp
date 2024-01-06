@@ -25,6 +25,7 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
         Console.WriteLine($"\t6. Read and print all {typeof(T).Name.ToLower()}s from {typeof(T).Name}s.csv file.");
         Console.WriteLine($"\t7. Create {typeof(T).Name.ToLower()}s.xml file from repository.");
         Console.WriteLine($"\t8. Read and print all {typeof(T).Name.ToLower()}s from {typeof(T).Name}s.xml file.");
+        Console.WriteLine($"\t9. Add sample {typeof(T).Name.ToLower()}s to repository.");
         Console.WriteLine("\tQ. Return.");
         Console.Write("\t\tYour choise: ");
     }
@@ -70,6 +71,7 @@ public abstract class Menu<T> : IMenu<T> where T : class, IEntity, new()
     protected abstract void ReadCsvFile();
     protected abstract void CreateXmlFile();
     protected abstract void ReadXmlFile();
+    protected abstract void AddSampleItemsToRepository();
 
     private IEnumerable<T> CheckRepositoryContent()
     {

@@ -106,6 +106,11 @@ public class ArtistsMenu : Menu<Artist>
         } while (choise != "Q");
     }
 
+    protected override void AddSampleItemsToRepository()
+    {
+        throw new NotImplementedException();
+    }
+
     protected override void ReadXmlFile()
     {
         MenuHelper.AddSeparator();

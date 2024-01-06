@@ -1,4 +1,5 @@
-﻿using MovieApp.AplicationServices.Components.FileCreator.CsvFile;
+﻿using MovieApp.AplicationServices.Components.DataGenerator;
+using MovieApp.AplicationServices.Components.FileCreator.CsvFile;
 using MovieApp.AplicationServices.Components.FileCreator.XmlFile;
 using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
@@ -13,19 +14,22 @@ public class MoviesMenu : Menu<Movie>
     private readonly ICsvReader _csvReader;
     private readonly IXmlCreator _xmlCreator;
     private readonly IXmlReader _xmlReader;
+    private readonly IDataGenerator _dataGenerator;
     private const string FILENAME = "movies";
 
     public MoviesMenu(IRepository<Movie> movieRepository,
         ICsvCreator csvCreator,
         ICsvReader csvReader,
         IXmlCreator xmlCreator,
-        IXmlReader xmlReader) : base(movieRepository)
+        IXmlReader xmlReader,
+        IDataGenerator dataGenerator) : base(movieRepository)
     {
         _movieRepository = movieRepository;
         _csvCreator = csvCreator;
         _csvReader = csvReader;
         _xmlCreator = xmlCreator;
         _xmlReader = xmlReader;
+        _dataGenerator = dataGenerator;
     }
 
     public override void LoadMenu()
@@ -66,6 +70,9 @@ public class MoviesMenu : Menu<Movie>
                     case "8":
                         ReadXmlFile();
                         break;
+                    case "9":
+                        AddSampleItemsToRepository();
+                        break;
                     case "Q":
                         break;
                     default:
@@ -104,6 +111,18 @@ public class MoviesMenu : Menu<Movie>
                 _movieRepository.ItemRemoved -= MovieRemovedOnItemRemoved!;
             }
         } while (choise != "Q");
+    }
+
+    protected override void AddSampleItemsToRepository()
+    {
+        foreach (var movie in _dataGenerator.GenerateSampleMovies())
+        {
+            _movieRepository.Add(movie);
+        }
+        _movieRepository.Save();
+
+        MenuHelper.AddSeparator();
+        Console.WriteLine($"INFO : Sample {FILENAME} added to repository.");
     }
 
     protected override void ReadXmlFile()
