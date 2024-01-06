@@ -115,14 +115,20 @@ public class MoviesMenu : Menu<Movie>
 
     protected override void AddSampleItemsToRepository()
     {
+        var counter = 0;
         foreach (var movie in _dataGenerator.GenerateSampleMovies())
         {
+            if(_movieRepository.GetAll().Where(x=>x.Title == movie.Title && x.Year == movie.Year).Any())
+            {
+                continue;
+            }
+            counter++;
             _movieRepository.Add(movie);
         }
         _movieRepository.Save();
 
         MenuHelper.AddSeparator();
-        Console.WriteLine($"INFO : Sample {FILENAME} added to repository.");
+        Console.WriteLine($"INFO : {counter} sample {FILENAME} added to repository.");
     }
 
     protected override void ReadXmlFile()
@@ -230,15 +236,20 @@ public class MoviesMenu : Menu<Movie>
             throw new FormatException($"ERROR : Invalid box office '{boxOffice}'! This is not price!");
         }
 
-        if (_movieRepository.GetAll().Where(x => x.Title == title && x.Year == newYear).Any())
-        {
-            MenuHelper.AddSeparator();
-            throw new ArgumentException("ERROR : Movie exist in repository!");
-        }
+        CheckMovieInRepository(title, newYear);
 
         _movieRepository.ItemAdded += MovieAddedOnItemAdded!;
         _movieRepository.Add(new Movie { Title = title, Year = newYear, Universe = universe, BoxOffice = newBoxOffice });
         _movieRepository.Save();
+    }
+
+    private void CheckMovieInRepository(string title, int year)
+    {
+        if (_movieRepository.GetAll().Where(x => x.Title == title && x.Year == year).Any())
+        {
+            MenuHelper.AddSeparator();
+            throw new ArgumentException("ERROR : Movie exist in repository!");
+        }
     }
 
     private void MovieRemovedOnItemRemoved(object sender, Movie movie)

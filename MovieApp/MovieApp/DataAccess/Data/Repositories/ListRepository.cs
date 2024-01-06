@@ -16,7 +16,7 @@ public class ListRepository<T> : IRepository<T> where T : class, IEntity, new()
 
     public T? GetById(int id)
     {
-        return _items.SingleOrDefault(x => x.Id == id, new T { Id = -1 });
+        return _items.SingleOrDefault(x => x.Id == id);
     }
 
     public void Add(T item)
