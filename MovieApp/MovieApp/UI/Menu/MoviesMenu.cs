@@ -118,7 +118,7 @@ public class MoviesMenu : Menu<Movie>
         var counter = 0;
         foreach (var movie in _dataGenerator.GenerateSampleMovies())
         {
-            if(_movieRepository.GetAll().Where(x=>x.Title == movie.Title && x.Year == movie.Year).Any())
+            if(IsMovieExistsInRepository(movie.Title!, movie.Year))
             {
                 continue;
             }
@@ -236,19 +236,26 @@ public class MoviesMenu : Menu<Movie>
             throw new FormatException($"ERROR : Invalid box office '{boxOffice}'! This is not price!");
         }
 
-        CheckMovieInRepository(title, newYear);
+        if (IsMovieExistsInRepository(title, newYear))
+        {
+            MenuHelper.AddSeparator();
+            throw new ArgumentException("ERROR : Movie exist in repository!");
+        }
 
         _movieRepository.ItemAdded += MovieAddedOnItemAdded!;
         _movieRepository.Add(new Movie { Title = title, Year = newYear, Universe = universe, BoxOffice = newBoxOffice });
         _movieRepository.Save();
     }
 
-    private void CheckMovieInRepository(string title, int year)
+    private bool IsMovieExistsInRepository(string title, int year)
     {
         if (_movieRepository.GetAll().Where(x => x.Title == title && x.Year == year).Any())
         {
-            MenuHelper.AddSeparator();
-            throw new ArgumentException("ERROR : Movie exist in repository!");
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
