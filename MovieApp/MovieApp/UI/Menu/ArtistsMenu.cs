@@ -1,4 +1,5 @@
-﻿using MovieApp.AplicationServices.Components.FileCreator.CsvFile;
+﻿using MovieApp.AplicationServices.Components.DataGenerator;
+using MovieApp.AplicationServices.Components.FileCreator.CsvFile;
 using MovieApp.AplicationServices.Components.FileCreator.XmlFile;
 using MovieApp.DataAccess.Data.Entities;
 using MovieApp.DataAccess.Data.Repositories;
@@ -13,19 +14,22 @@ public class ArtistsMenu : Menu<Artist>
     private readonly ICsvReader _csvReader;
     private readonly IXmlCreator _xmlCreator;
     private readonly IXmlReader _xmlReader;
+    private readonly IDataGenerator _artistGenerator;
     private const string FILENAME = "artists";
 
     public ArtistsMenu(IRepository<Artist> artistRepository,
         ICsvCreator csvCreator,
         ICsvReader csvReader,
         IXmlCreator xmlCreator,
-        IXmlReader xmlReader) : base(artistRepository)
+        IXmlReader xmlReader,
+        IDataGenerator artistGenerator) : base(artistRepository)
     {
         _artistRepository = artistRepository;
         _csvCreator = csvCreator;
         _csvReader = csvReader;
         _xmlCreator = xmlCreator;
         _xmlReader = xmlReader;
+        _artistGenerator = artistGenerator;
     }
 
     public override void LoadMenu()
@@ -65,6 +69,9 @@ public class ArtistsMenu : Menu<Artist>
                         break;
                     case "8":
                         ReadXmlFile();
+                        break;
+                    case "9":
+                        AddSampleItemsToRepository();
                         break;
                     case "Q":
                         break;
@@ -108,7 +115,20 @@ public class ArtistsMenu : Menu<Artist>
 
     protected override void AddSampleItemsToRepository()
     {
-        throw new NotImplementedException();
+        var counter = 0;
+        foreach (var artist in _artistGenerator.GenerateSampleArtists())
+        {
+            if(IsArtistExistsInRepository(artist.FirstName!, artist.LastName!))
+            {
+                continue;
+            }
+            counter++;
+            _artistRepository.Add(artist);
+        }
+        _artistRepository.Save();
+
+        MenuHelper.AddSeparator();
+        Console.WriteLine($"INFO : {counter} sample {FILENAME} added to repository.");
     }
 
     protected override void ReadXmlFile()
@@ -197,7 +217,7 @@ public class ArtistsMenu : Menu<Artist>
         var lastName = Console.ReadLine()!;
 
         var artists = _artistRepository.GetAll();
-        if (artists.Where(x => x.FirstName == firstName && x.LastName == lastName).Any())
+        if (IsArtistExistsInRepository(firstName, lastName))
         {
             MenuHelper.AddSeparator();
             throw new ArgumentException($"ERROR : Artist exists in repository!");
@@ -206,6 +226,18 @@ public class ArtistsMenu : Menu<Artist>
         _artistRepository.ItemAdded += ArtistAddedOnItemAdded!;
         _artistRepository.Add(new Artist { FirstName = firstName, LastName = lastName });
         _artistRepository.Save();
+    }
+
+    private bool IsArtistExistsInRepository(string firstName, string lastName)
+    {
+        if (_artistRepository.GetAll().Where(x => x.FirstName == firstName && x.LastName == lastName).Any())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void ArtistRemovedOnItemRemoved(object sender, Artist artist)
